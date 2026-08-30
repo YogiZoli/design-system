@@ -82,7 +82,7 @@ pointed at the same canon.
 1. Components read **role tokens only** (`--primary`, `--border`, `--foreground`),
    never the raw scales (`--brand-500`) and never a literal hex.
 2. Every infinite animation stops under `prefers-reduced-motion: reduce`.
-3. Focus ring (`--ring`, turquoise) is always visible, never removed.
+3. Focus ring (`--ring`, green) is always visible, never removed.
 4. Shadows are navy-tinted, never pure black.
 5. If a token or a doc contradicts this file, fix the doc  do not silently fork
    the canon.
@@ -91,14 +91,15 @@ pointed at the same canon.
 
 Mobile-first and deliberately tighter than LeadGenJay's desktop rhythm (Zoltan
 works on a small screen and optimizes for mobile). `--section-y` is 40px on
-mobile, 64px from 768px up. Body line-height is 1.5. Card padding 20px.
+mobile, 64px from 768px up. Body line-height is 1.55. Card padding 20px.
 
 ## Status
 
-- 2026-08-28  System defined and iterated with Zoltan. LOCKED:
-  azure brand `#1E7CE8`; primary CTA green `#12A150` navy text + green pulse;
-  secondary button azure fill white text; Open Sans; base 17px; light theme
-  ships (dark tokens exist, not used); spacing mobile-first.
+- 2026-08-29  System LOCKED after iterating with Zoltan: azure brand `#1E7CE8`;
+  primary CTA deep green `#0E8542` WHITE text (~4.7:1) + green pulse; secondary
+  button deep azure `#1663C6` white text; every button white on solid at 4.5:1+;
+  Open Sans, base 18px; light theme ships (dark tokens exist, not used);
+  spacing mobile-first. Human guide: `BRAND-GUIDE.md`.
 - 2026-08-28  First rollout: Publishing Dream Team, all 5 templates, via
   `app/static/theme.css`. PR: github.com/YogiZoli/publishing-dreamteam/pull/4
   (branch `feat/brand-system`). Visual-only, awaiting Zoltan's review.
