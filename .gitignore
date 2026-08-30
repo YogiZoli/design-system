@@ -5,3 +5,8 @@ node_modules/
 # Python
 __pycache__/
 *.pyc
+
+# pptx-template build artifacts
+tools/pptx-template/*.pdf
+tools/pptx-template/*.jpg
+tools/pptx-template/__pycache__/
