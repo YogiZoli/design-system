@@ -103,15 +103,20 @@ Components read **role tokens**, never a raw scale value, never a literal hex.
 
 ### 2.4 Per-touchpoint
 
+**No dark backgrounds anywhere.** Every surface is light: page `#F6F8FC`, cards
+and panels `#FFFFFF`. Depth comes from borders and soft navy-tinted shadows, not
+from dark fills. (Zoltan's call, 2026-08-31. Applies to docs, decks, PDFs,
+social graphics, thumbnails.)
+
 | Touchpoint | Background | Headline and body | Accent and CTA |
 |---|---|---|---|
 | Web apps, landing pages | `#F6F8FC` | `#1E2733` body, `#1663C6` links | green `#0E8542` button |
-| PDF lead magnets | `#FFFFFF` | `#1E2733` body, `#144F9F` H1 | green `#0E8542` CTA block, azure rule lines |
-| YouTube thumbnails | `#0E2038` or `#15355F` dark | `#FFFFFF` or `#82B0F7` | green `#24A957` pop, max 5 words |
-| Slide decks and PLCs | `#FFFFFF` | `#1E2733` body, `#144F9F` H1 | green `#0E8542` |
-| Shorts and Reels | dark `#0E2038` | high contrast white or `#82B0F7` | green pop |
+| PDF lead magnets | `#FFFFFF` page, `#EBF3FE` tint boxes | `#1E2733` body, `#144F9F` H1 | green `#0E8542` button in a light panel, azure rule lines |
+| Slide decks and PLCs | `#F6F8FC` or `#FFFFFF` | `#1E2733` body, `#144F9F` H1 | green `#0E8542`, keyword in a green pill |
+| YouTube thumbnails | `#FFFFFF` or `#F6F8FC` | `#144F9F` / `#1E2733`, one word green `#0E8542` | green pop, max 5 words |
+| Shorts and Reels | light `#F6F8FC` | `#144F9F` / `#1E2733` | green pop |
 | Email (GHL, campaigns) | stays black and white | n/a | n/a (see 2.6) |
-| Community posts | platform native | platform native | azure or green in graphics only |
+| Community posts | light `#F6F8FC`, white card | `#144F9F` heading, `#4C5768` body | green `#0E8542` button |
 
 ### 2.5 Accessibility
 
@@ -229,8 +234,10 @@ hover; inputs get a 3px green focus glow.
 
 ### 4.5 Theme
 
-Light is the only theme that ships. Dark-mode tokens exist in `tokens.css` for
-later; there is no toggle. Do not build a dark UI unless asked.
+Light everywhere. No dark backgrounds on any surface: no dark UI, no dark slides,
+no dark PDF panels, no dark thumbnails. Dark-mode tokens still exist in
+`tokens.css` for a possible future web dark mode, but nothing ships with them and
+no static deliverable uses a dark fill.
 
 ---
 
@@ -294,11 +301,12 @@ simple, just; hustle, grind, 24/7; very, really, basically, actually.
 ```
 Primary CTA          green  #0E8542  fill, white text, green pulse
 Secondary button     azure  #1663C6  fill, white text
-Brand and links      azure  #1E7CE8
+Brand and links      azure  #1E7CE8   H1 on light  #144F9F
 Page background       #F6F8FC        Surface or card  #FFFFFF
 Body text             #1E2733        Muted text       #6A7688
-Border                #E0E6F0
-Dark section, footer  #0E2038        text on it  #FFFFFF or #82B0F7
+Border                #E0E6F0        Tint panel (callout)  #EBF3FE
+Green pop (a highlighted word)  #0E8542
+No dark backgrounds anywhere.
 Success  #0B7A3E   Warning  #E5A400   Danger  #E5484D
 ```
 
