@@ -104,7 +104,10 @@ def _set_tracking(run, pts):
     rPr.set("spc", str(int(pts * 100)))
 
 
-def _ring(slide, corner, color):
+RING_TINT = RGBColor(0xB0, 0xCE, 0xFB)   # brand-200, faint on light
+
+
+def _ring(slide, corner, color=RING_TINT):
     """Thin outline circle bleeding off a corner. The one repeated motif."""
     d = Inches(4.2)
     pos = {
@@ -138,11 +141,10 @@ def _icon_circle(slide, x, y, glyph, circle_color, glyph_color, d=Inches(0.9)):
     r.font.color.rgb = glyph_color
 
 
-def _footer(slide, dark):
-    col = MUTED_LIGHT if dark else MUTED
+def _footer(slide, dark=False):
     _text(slide, MARGIN, EMU_H - Inches(0.62), Inches(11.5), Inches(0.4),
           "commentclient.com    |    youtube.com/@ZoltanGero",
-          size=11, color=col, bold=True)
+          size=11, color=MUTED, bold=True)
 
 
 def _card(slide, x, y, w, h, fill_color, border_color=None):
@@ -163,31 +165,31 @@ def _card(slide, x, y, w, h, fill_color, border_color=None):
 # LAYOUTS
 # ----------------------------------------------------------------------------
 
-def layout_title(prs, eyebrow, title, subtitle, tag="LAYOUT: TITLE (navy)"):
+def layout_title(prs, eyebrow, title, subtitle, tag="LAYOUT: TITLE"):
     s = _blank(prs)
-    _bg(s, NAVY)
-    _ring(s, "br", GREEN_POP)
+    _bg(s, PAGE)
+    _ring(s, "br")
     _text(s, MARGIN, Inches(1.7), Inches(9.6), Inches(0.5), eyebrow.upper(),
-          size=15, color=AZURE_LIGHT, bold=True, tracking=1.6)
+          size=15, color=RGBColor(0x16, 0x63, 0xC6), bold=True, tracking=1.6)
     _text(s, MARGIN, Inches(2.35), Inches(10.4), Inches(2.6), title,
-          size=44, color=WHITE, bold=True, line=1.05)
+          size=44, color=H1_BLUE, bold=True, line=1.05)
     _text(s, MARGIN, Inches(4.9), Inches(9.4), Inches(1.4), subtitle,
-          size=18, color=MUTED_LIGHT, line=1.4)
-    _footer(s, dark=True)
-    _tag(s, tag, True)
+          size=18, color=MUTED, line=1.4)
+    _footer(s)
+    _tag(s, tag, False)
     return s
 
 
-def layout_section(prs, number, title, tag="LAYOUT: SECTION DIVIDER (navy)"):
+def layout_section(prs, number, title, tag="LAYOUT: SECTION DIVIDER"):
     s = _blank(prs)
-    _bg(s, NAVY)
-    _ring(s, "tr", AZURE)
+    _bg(s, PAGE)
+    _ring(s, "tr", RGBColor(0xBF, 0xE8, 0xCC))   # green-100 tint
     _text(s, MARGIN, Inches(1.9), Inches(4), Inches(2.2), str(number),
-          size=120, color=GREEN_POP, bold=True, line=1.0)
+          size=120, color=GREEN_CTA, bold=True, line=1.0)
     _text(s, MARGIN, Inches(4.2), Inches(10.6), Inches(1.8), title,
-          size=40, color=WHITE, bold=True, line=1.1)
-    _footer(s, dark=True)
-    _tag(s, tag, True)
+          size=40, color=H1_BLUE, bold=True, line=1.1)
+    _footer(s)
+    _tag(s, tag, False)
     return s
 
 
@@ -208,53 +210,58 @@ def layout_content_light(prs, title, body, *, bullets=None, right=None,
         _bullets(s, MARGIN, y, col_w, bullets, BODY, GREEN_CTA)
     if right:
         right(s, MARGIN + col_w + Inches(0.5), Inches(2.2))
-    _footer(s, dark=False)
+    _footer(s)
     _tag(s, tag, False)
     return s
 
 
-def layout_content_dark(prs, title, body, *, emphasis=None, callout=None,
-                        tag="LAYOUT: CONTENT DARK (navy)"):
+def layout_content_callout(prs, title, body, *, emphasis=None, callout=None,
+                           tag="LAYOUT: CONTENT + CALLOUT"):
+    """Light content slide with an azure-tint callout band. (No dark slides.)"""
     s = _blank(prs)
-    _bg(s, NAVY)
-    _ring(s, "bl", GREEN_POP)
+    _bg(s, PAGE)
+    _ring(s, "bl", RGBColor(0xBF, 0xE8, 0xCC))
     if emphasis and emphasis in title:
         before, after = title.split(emphasis, 1)
-        runs = [(before, WHITE, True), (emphasis, AZURE_LIGHT, True), (after, WHITE, True)]
+        runs = [(before, H1_BLUE, True), (emphasis, GREEN_CTA, True), (after, H1_BLUE, True)]
         _text(s, MARGIN, Inches(0.9), Inches(11.5), Inches(1.2), runs,
-              size=32, color=WHITE, bold=True, line=1.1)
+              size=32, color=H1_BLUE, bold=True, line=1.1)
     else:
         _text(s, MARGIN, Inches(0.9), Inches(11.5), Inches(1.2), title,
-              size=32, color=WHITE, bold=True, line=1.1)
-    _text(s, MARGIN, Inches(2.4), Inches(9.6), Inches(2.4), body,
-          size=19, color=BODY_ON_DARK, line=1.45)
+              size=32, color=H1_BLUE, bold=True, line=1.1)
+    _text(s, MARGIN, Inches(2.4), Inches(10.4), Inches(2.4), body,
+          size=19, color=BODY, line=1.45)
     if callout:
-        _card(s, MARGIN, Inches(4.9), Inches(10.8), Inches(1.5), CARD_DARK)
-        _text(s, MARGIN + Inches(0.45), Inches(5.05), Inches(10), Inches(1.2),
-              callout, size=17, color=WHITE, bold=True, line=1.35,
-              anchor=MSO_ANCHOR.MIDDLE)
-    _footer(s, dark=True)
-    _tag(s, tag, True)
+        band = _card(s, MARGIN, Inches(4.9), Inches(11.0), Inches(1.5),
+                     RGBColor(0xEB, 0xF3, 0xFE), RGBColor(0xD6, 0xE6, 0xFD))
+        _text(s, MARGIN + Inches(0.45), Inches(5.02), Inches(10.1), Inches(1.25),
+              callout, size=17, color=RGBColor(0x14, 0x4F, 0x9F), bold=True,
+              line=1.35, anchor=MSO_ANCHOR.MIDDLE)
+    _footer(s)
+    _tag(s, tag, False)
     return s
 
 
-def layout_cta(prs, keyword, line, tag="LAYOUT: CTA (navy)"):
+# keep the old name as an alias so existing callers do not break
+layout_content_dark = layout_content_callout
+
+
+def layout_cta(prs, keyword, line, tag="LAYOUT: CTA"):
     s = _blank(prs)
-    _bg(s, NAVY)
-    _ring(s, "tr", GREEN_POP)
-    # "Comment  [KEYWORD]  below" centred, keyword in a green pill
+    _bg(s, PAGE)
+    _ring(s, "tr", RGBColor(0xBF, 0xE8, 0xCC))
     base_y = Inches(2.8)
     _text(s, Inches(1.0), base_y, Inches(4.7), Inches(1.0), "Comment",
-          size=44, color=WHITE, bold=True, align=PP_ALIGN.RIGHT,
+          size=44, color=BODY, bold=True, align=PP_ALIGN.RIGHT,
           anchor=MSO_ANCHOR.MIDDLE)
-    pill = slide_pill(s, Inches(5.95), base_y + Inches(0.06), keyword)
+    slide_pill(s, Inches(5.95), base_y + Inches(0.06), keyword)
     _text(s, Inches(9.05), base_y, Inches(3.3), Inches(1.0), "below",
-          size=44, color=WHITE, bold=True, align=PP_ALIGN.LEFT,
+          size=44, color=BODY, bold=True, align=PP_ALIGN.LEFT,
           anchor=MSO_ANCHOR.MIDDLE)
     _text(s, Inches(1.5), Inches(4.25), Inches(10.3), Inches(1.3), line,
-          size=19, color=MUTED_LIGHT, align=PP_ALIGN.CENTER, line=1.4)
-    _footer(s, dark=True)
-    _tag(s, tag, True)
+          size=19, color=MUTED, align=PP_ALIGN.CENTER, line=1.4)
+    _footer(s)
+    _tag(s, tag, False)
     return s
 
 
@@ -338,11 +345,11 @@ def build_master():
                          bullets=["First supporting point", "Second supporting point",
                                   "Third supporting point"],
                          right=demo_right)
-    layout_content_dark(prs, "Content, dark background with one emphasis word",
-                        "On navy the body is C6D3E4. One word in the heading can be "
-                        "azure light 82B0F7. Everything else stays white.",
+    layout_content_dark(prs, "Content with a callout band and one emphasis word",
+                        "Every slide is light. Body is 1E2733, headings 144F9F. One "
+                        "word in the heading can be green 0E8542.",
                         emphasis="emphasis",
-                        callout="A callout card sits on a 17324F rounded rectangle.")
+                        callout="The callout band sits on an azure tint (EBF3FE).")
     layout_cta(prs, "KEYWORD",
                "The CTA slide. Replace KEYWORD with your real trigger word.")
     out = HERE / "master.pptx"

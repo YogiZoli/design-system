@@ -100,18 +100,20 @@ body{{
 
 a{{color:{T['link']};text-decoration:none;}}
 
-/* end-of-document footer, one clean block after the CTA */
+/* fixed page footer, repeats on every page (cover included) */
 .docfoot{{
-  margin-top:8mm;padding-top:3mm;border-top:1px solid {T['border']};
-  display:flex;justify-content:space-between;
-  font-size:8pt;color:{T['muted']};letter-spacing:0.01em;break-inside:avoid;
+  position:fixed;left:0;right:0;bottom:6mm;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:8pt;color:{T['muted']};letter-spacing:0.01em;
 }}
 .docfoot .rf-name{{font-weight:700;color:{T['foreground']};}}
+.docfoot .yt-link{{display:inline-flex;align-items:center;gap:2mm;font-weight:600;color:{T['brand']};}}
+.docfoot .yt-link .yt{{width:15px;height:11px;flex:none;}}
 
 /* ---------- cover ---------- */
 .cover{{
   break-after:page;
-  min-height:243mm;               /* fill the page box */
+  min-height:210mm;               /* leaves room for the fixed page footer */
   display:flex;flex-direction:column;
   padding-top:8mm;
 }}
@@ -140,7 +142,7 @@ a{{color:{T['link']};text-decoration:none;}}
   text-transform:uppercase;color:{T['muted']};
 }}
 .cover .cover-foot{{
-  border-top:1px solid {T['border']};padding-top:5mm;
+  padding-top:5mm;
   display:flex;justify-content:space-between;align-items:baseline;
 }}
 .cover .cover-foot .who{{font-size:12pt;font-weight:700;color:{T['foreground']};}}
@@ -258,20 +260,21 @@ strong,b{{font-weight:700;}}
 }}
 .numcard .nbody{{flex:1;}}
 
-/* dark overview box */
+/* overview box (light, azure tint  no dark backgrounds anywhere) */
 .darkbox{{
-  background:{T['dark']};color:#FFFFFF;border-radius:12px;
+  background:{T['azure_50']};color:{T['foreground']};border-radius:12px;
+  border:1px solid {T['azure_100']};
   padding:6mm 7mm;margin:4mm 0;break-inside:avoid;
 }}
 .darkbox .dlabel{{
   font-size:8.5pt;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
-  color:{T['dark_fg']};margin-bottom:3mm;
+  color:{T['h1']};margin-bottom:3mm;
 }}
 .darkbox ul{{list-style:none;}}
 .darkbox li{{
   display:flex;gap:3mm;padding:1.5mm 0;font-size:10.5pt;line-height:1.45;
 }}
-.darkbox li .d{{flex:none;color:{T['dark_fg']};font-weight:700;}}
+.darkbox li .d{{flex:none;color:{T['brand']};font-weight:700;}}
 
 .arrowlist{{list-style:none;}}
 .arrowlist li{{
@@ -286,24 +289,24 @@ strong,b{{font-weight:700;}}
 }}
 .panel h3{{margin-top:0;color:{T['h1']};}}
 
-/* ---------- CTA block (green, white text, per BRAND-GUIDE) ---------- */
+/* ---------- CTA block (light panel, green BUTTON  per Zoltan) ---------- */
 .cta{{
-  background:{T['primary']};color:{T['primary_fg']};
-  border-radius:16px;padding:9mm 9mm;margin:9mm 0 4mm 0;
+  background:{T['neutral_50']};border:1px solid {T['border']};
+  border-radius:16px;padding:8mm 9mm;margin:9mm 0 4mm 0;
   text-align:center;break-inside:avoid;
-  box-shadow:0 12px 28px rgba(14,32,56,.12);
 }}
 .cta .cta-label{{
-  font-size:11pt;font-weight:600;line-height:1.4;color:#FFFFFF;
+  font-size:12pt;font-weight:700;line-height:1.4;color:{T['foreground']};
   margin-bottom:4mm;
 }}
 .cta .cta-btn{{
-  display:inline-block;background:#FFFFFF;color:{T['primary']};
+  display:inline-block;background:{T['primary']};color:{T['primary_fg']};
   font-size:12pt;font-weight:700;letter-spacing:0.01em;
   padding:4mm 12mm;border-radius:10px;
+  box-shadow:0 4px 12px rgba(14,32,56,.10);
 }}
 .cta .cta-url{{
-  display:block;margin-top:3mm;font-size:8.5pt;color:{T['green_100']};
+  display:block;margin-top:3mm;font-size:8.5pt;color:{T['muted']};
   word-break:break-all;
 }}
 """
@@ -350,10 +353,10 @@ def doc_footer(c: dict) -> str:
     year = esc(c.get("footer_year", "2026"))
     name = esc(c.get("footer_name", "Zoltan Gero"))
     doc = esc(c.get("footer_doc_name", ""))
-    url = esc(c.get("footer_url", "").replace("https://", "").replace("?sub_confirmation=1", ""))
+    handle = esc(c.get("footer_handle", "youtube.com/@ZoltanGero"))
     return (f'<div class="docfoot"><span>&#169; {year} '
             f'<span class="rf-name">{name}</span>{" &#183; " + doc if doc else ""}</span>'
-            f'<span>{url}</span></div>')
+            f'<span class="yt-link">{YT_SVG}{handle}</span></div>')
 
 
 def cover_html(c: dict) -> str:
@@ -383,11 +386,11 @@ def cta_html(c: dict) -> str:
 def document(c: dict, body_inner: str, extra_css: str = "") -> str:
     return f"""<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
 <style>{base_css()}{extra_css}</style></head><body>
+{doc_footer(c)}
 {cover_html(c)}
 <main class="content">
 {body_inner}
 {cta_html(c)}
-{doc_footer(c)}
 </main>
 </body></html>"""
 
