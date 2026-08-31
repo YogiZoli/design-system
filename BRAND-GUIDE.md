@@ -46,7 +46,7 @@ the action, and about 90 percent of every surface is neutral.
 
 | Role | Name | Hex | Use for |
 |---|---|---|---|
-| Brand | Azure | `#1E7CE8` | Links, header, logo mark, dark-section headings, focus ring, secondary button |
+| Brand | Azure | `#1E7CE8` | Links, header, logo mark, focus ring, secondary button (headings on light use `#144F9F`) |
 | Action | Green | `#0E8542` | The primary CTA only. Solid fill, white text, slow green pulse. |
 
 The primary CTA is **green `#0E8542` with white text** (contrast about 4.7:1).
@@ -57,7 +57,7 @@ fill, no dark on dark.
 
 ### 2.2 Full scales
 
-**Brand (azure).** Identity, links, dark sections.
+**Brand (azure).** Identity, links, headings (`#144F9F` on light).
 
 ```
 50  #EBF3FE   200 #B0CEFB   400 #4F8DF0   600 #1663C6   800 #163F7B   950 #0E2038
@@ -329,6 +329,7 @@ CTA button label     Open Sans 600   16 to 18px, white on solid
 
 - Never dark text on a mid-tone button. Every button is white text on a solid
   fill at 4.5:1 or better.
+- Never a dark background. Every surface is light.
 - Never more than three brand colours in one design unit.
 - Never a paragraph longer than 3 sentences.
 - Never ALL CAPS beyond a 3-word label.
