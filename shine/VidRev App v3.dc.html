@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7F8FB;color:#0E1330;font-family:"Open Sans","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+a{color:var(--l,#4527D6)}a:hover{color:var(--lh,#2E1A99)}
+*{box-sizing:border-box}
+@keyframes cta-halo{0%{box-shadow:0 0 0 0 var(--halo,rgba(91,61,245,.5)),0 6px 20px var(--halo2,rgba(91,61,245,.28))}70%{box-shadow:0 0 0 14px transparent,0 6px 20px var(--halo2,rgba(91,61,245,.28))}100%{box-shadow:0 0 0 0 transparent,0 6px 20px var(--halo2,rgba(91,61,245,.28))}}@keyframes ping{75%,100%{transform:scale(2.2);opacity:0}}
+@keyframes live-dot{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes num-pop{0%{transform:scale(1)}30%{transform:scale(1.09);text-shadow:0 0 22px var(--halo2,rgba(91,61,245,.35))}60%{transform:scale(.98)}100%{transform:scale(1);text-shadow:none}}
+@keyframes card-in-a{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes card-in-b{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes row-in-a{from{opacity:0;transform:translateY(-8px);background:var(--as,#EEEBFF)}to{opacity:1;transform:none;background:transparent}}
+@keyframes row-in-b{from{opacity:0;transform:translateY(-8px);background:var(--as,#EEEBFF)}to{opacity:1;transform:none;background:transparent}}
+@keyframes bar-grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes toast-in{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes bump-a{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+@keyframes bump-b{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+@keyframes shimmer{from{background-position:-400px 0}to{background-position:400px 0}}
+@keyframes sheen{0%,70%{transform:translateX(-120%)}100%{transform:translateX(220%)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#F0F1F6">
+  <div style="position:sticky;top:0;z-index:10;background:#FFFFFF;border-bottom:1px solid #E6E8F0">
+    <div style="max-width:1200px;margin:0 auto;padding:10px 16px;display:flex;gap:6px;align-items:center;overflow-x:auto">
+      <span style="font:700 11px/1 'Geist Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#4A5068;white-space:nowrap;padding-right:8px">Screens</span>
+      <sc-for list="{{ screens }}" as="s" hint-placeholder-count="12">
+        <button onClick="{{ s.go }}" style="flex:none;border:1px solid {{ s.border }};background:{{ s.bg }};color:{{ s.color }};border-radius:9999px;padding:6px 12px;font:600 13px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap;white-space:nowrap">{{ s.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="max-width:{{ frameW }};margin:0 auto;background:#F7F8FB;background-image:radial-gradient(rgba(14,19,48,.07) 1px,transparent 1px);background-size:20px 20px;min-height:calc(100vh - 50px);border-left:{{ frameBorder }};border-right:{{ frameBorder }}">
+
+    <sc-if value="{{ isDS }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:1080px;margin:0 auto;padding:40px 16px 80px;display:grid;gap:32px">
+        <div style="display:grid;gap:8px">
+          <p style="display:flex;align-items:center;gap:8px;margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A5068"><span style="width:6px;height:6px;border-radius:9999px;background:var(--a,#00C2A8);white-space:nowrap;flex:none"></span>VidRev design system</p>
+          <h1 style="margin:0;font-size:32px;line-height:1.2;letter-spacing:-.016em;font-weight:800;text-wrap:balance">Vivid, live, minimal. One pulsing action per screen.</h1>
+          <p style="margin:0;max-width:68ch;font-size:16px;line-height:1.6;color:#4A5068">One saturated primary for action, one live accent for motion (dots, progress, the header hairline), cool near-white ground with a faint dot grid, ink text. Open Sans for everything, Geist Mono for labels, ids, links and code. Switch the palette in Tweaks.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px">
+          <div style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;box-shadow:0 1px 2px rgba(14,19,48,.06);display:grid;gap:14px">
+            <h2 style="margin:0;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A5068">Colour roles</h2>
+            <sc-for list="{{ swatches }}" as="sw" hint-placeholder-count="8">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span style="width:40px;height:40px;border-radius:10px;background:{{ sw.hex }};border:1px solid #E6E8F0;flex:none"></span>
+                <div style="display:grid;gap:2px;min-width:0"><strong style="font-size:15px">{{ sw.name }}</strong><span style="font:400 13px/1.3 'Geist Mono',monospace;color:#666C84">{{ sw.hex }} · {{ sw.use }}</span></div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;box-shadow:0 1px 2px rgba(14,19,48,.06);display:grid;gap:14px;align-content:start">
+            <h2 style="margin:0;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A5068">Type · Open Sans</h2>
+            <div style="font-size:40px;line-height:1.1;font-weight:800;letter-spacing:-.02em">$4,280</div>
+            <div style="font-size:28px;line-height:1.2;font-weight:700;letter-spacing:-.016em">Page title 28</div>
+            <div style="font-size:18px;font-weight:700">Card title 18</div>
+            <div style="font-size:16px;line-height:1.6">Body 16. Every reply waits for your approval.</div>
+            <div style="font-size:15px;color:#666C84">Meta 15, secondary text</div>
+            <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A5068">Eyebrow 12</div>
+            <div style="font:400 14px 'Geist Mono',monospace;color:#0E1330">go.yourdomain.com/k3x9Tq2</div>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;box-shadow:0 1px 2px rgba(14,19,48,.06);display:grid;gap:16px;align-content:start">
+            <h2 style="margin:0;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A5068">Buttons</h2>
+            <div style="display:grid;gap:6px;justify-items:start">
+              <button style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:12px 24px;border:0;border-radius:10px;background:var(--p,#5B3DF5);color:#FFFFFF;font:600 16px/1 'Open Sans',sans-serif;cursor:pointer;animation:{{ pulseAnim }};transition:transform .15s ease,background .15s ease;white-space:nowrap" style-hover="background:var(--ph,#4527D6);transform:translateY(-1px)">Primary, pulsing →</button>
+              <span style="font-size:13px;color:#666C84">One per screen. Solid fill, white text, 4.5:1 or better</span>
+            </div>
+            <div style="display:grid;gap:6px;justify-items:start">
+              <button style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:12px 24px;border:0;border-radius:10px;background:var(--l,#4527D6);color:#FFFFFF;font:600 16px/1 'Open Sans',sans-serif;cursor:pointer" style-hover="background:var(--lh,#2E1A99)">Secondary</button>
+              <span style="font-size:13px;color:#666C84">A second filled action, when needed</span>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button style="display:inline-flex;align-items:center;min-height:40px;padding:8px 16px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:600 15px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:#F0F1F6">Outline</button>
+              <button style="display:inline-flex;align-items:center;min-height:40px;padding:8px 12px;border:0;border-radius:10px;background:transparent;color:#0E1330;font:600 15px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:#F0F1F6">Ghost</button>
+            </div>
+            <span style="font-size:13px;color:#666C84">Outline and ghost for everything else: Skip, Save, Pause, Remove.</span>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;box-shadow:0 1px 2px rgba(14,19,48,.06);display:grid;gap:14px;align-content:start">
+            <h2 style="margin:0;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A5068">Badges and status</h2>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <span style="display:inline-flex;align-items:center;gap:6px;border-radius:9999px;background:var(--bs,#EEEBFF);color:var(--lh,#2E1A99);padding:4px 10px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;flex:none">Private beta</span>
+              <span style="display:inline-flex;align-items:center;gap:6px;border-radius:9999px;background:#E3F3E8;color:#0B7A3E;padding:4px 10px;font-size:12px;font-weight:700;white-space:nowrap;flex:none"><span style="width:6px;height:6px;border-radius:9999px;background:#0B7A3E;animation:live-dot 1.6s ease-in-out infinite;white-space:nowrap;flex:none"></span>Live</span>
+              <span style="display:inline-flex;align-items:center;border-radius:9999px;background:#FBF2DD;color:#6B4E00;padding:4px 10px;font-size:12px;font-weight:700;white-space:nowrap;flex:none">Waiting</span>
+              <span style="display:inline-flex;align-items:center;border-radius:9999px;background:#FFF1E8;color:#A33A00;padding:4px 10px;font-size:12px;font-weight:700;white-space:nowrap;flex:none">Failed</span>
+              <span style="display:inline-flex;align-items:center;border-radius:6px;background:#F0F1F6;color:#2A3048;padding:3px 8px;font:500 13px 'Geist Mono',monospace">GUIDE</span>
+              <span style="display:inline-flex;align-items:center;border-radius:6px;border:1px solid #D5D8E3;color:#2A3048;padding:2px 7px;font-size:11px;font-weight:700;letter-spacing:.06em">HOT</span>
+            </div>
+            <p role="status" style="margin:0;border-radius:12px;border:1px solid rgba(11,122,62,.3);background:#E3F3E8;padding:12px 14px;font-size:15px;color:#0E1330">Info notice. Settings saved.</p>
+            <p role="alert" style="margin:0;border-radius:12px;border:1px solid rgba(242,101,27,.4);background:#FFF1E8;padding:12px 14px;font-size:15px;color:#0E1330">Error notice. Connect your channel first.</p>
+            <label style="display:grid;gap:6px;font-size:14px;font-weight:600;color:#4A5068">Input
+              <input placeholder="@yourchannel" style="width:100%;min-height:44px;padding:12px 16px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:400 16px 'Open Sans',sans-serif" style-focus="outline:none;border-color:var(--p,#5B3DF5);box-shadow:0 0 0 3px var(--ring,rgba(91,61,245,.22))">
+            </label>
+          </div>
+        </div>
+
+        <div style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;box-shadow:0 1px 2px rgba(14,19,48,.06);display:grid;gap:12px">
+          <h2 style="margin:0;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A5068">Rules the pages follow</h2>
+          <ol style="margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px">
+            <sc-for list="{{ rules }}" as="r" hint-placeholder-count="6">
+              <li style="display:grid;gap:4px"><span style="font:500 13px 'Geist Mono',monospace;color:var(--p,#5B3DF5)">{{ r.n }}</span><strong style="font-size:15px">{{ r.t }}</strong><span style="font-size:14px;line-height:1.5;color:#666C84">{{ r.d }}</span></li>
+            </sc-for>
+          </ol>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isApp }}" hint-placeholder-val="{{ true }}">
+      <header style="background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid #E6E8F0"><div style="height:2px;background:linear-gradient(90deg,var(--p,#5B3DF5),var(--a,#00C2A8))"></div>
+        <div style="max-width:1200px;margin:0 auto;padding:12px 16px 0;display:grid;gap:8px">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <span style="display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:18px;letter-spacing:-.01em;color:#0E1330"><img src="public/vidrev-logo.png" width="28" height="28" alt="" style="border-radius:6px">vidrev</span>
+            <div style="display:flex;align-items:center;gap:12px;min-width:0">
+              <span style="font-size:14px;color:#666C84;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">zoltan@vidrev.app</span>
+              <button style="flex:none;display:inline-flex;align-items:center;min-height:36px;padding:6px 14px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:600 14px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:#F0F1F6">Sign out</button>
+            </div>
+          </div>
+          <sc-if value="{{ showTopNav }}" hint-placeholder-val="{{ true }}"><nav style="display:flex;gap:4px;overflow-x:auto;margin:0 -4px">
+            <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7">
+              <a onClick="{{ n.go }}" style="flex:none;display:inline-flex;align-items:center;min-height:44px;padding:0 10px;border-bottom:2px solid {{ n.line }};color:{{ n.color }};font-size:15px;font-weight:{{ n.weight }};text-decoration:none;cursor:pointer;white-space:nowrap" style-hover="color:#0E1330">{{ n.label }}<sc-if value="{{ n.count }}" hint-placeholder-val="{{ false }}"><span style="display:inline-block;margin-left:6px;min-width:20px;height:20px;padding:0 6px;border-radius:9999px;background:var(--p,#5B3DF5);color:#FFFFFF;font:700 11px/20px 'Open Sans',sans-serif;text-align:center;animation:{{ n.countAnim }}">{{ n.count }}</span></sc-if></a>
+            </sc-for>
+          </nav></sc-if>
+        </div>
+      </header>
+    </sc-if>
+
+    <sc-if value="{{ isPublic }}" hint-placeholder-val="{{ false }}">
+      <header style="max-width:1200px;margin:0 auto;padding:16px;display:flex;align-items:center;justify-content:space-between">
+        <span style="display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:18px;letter-spacing:-.01em"><img src="public/vidrev-logo.png" width="28" height="28" alt="" style="border-radius:6px">vidrev</span>
+        <button style="display:inline-flex;align-items:center;min-height:36px;padding:6px 14px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:600 14px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:#F0F1F6">Sign in</button>
+      </header>
+    </sc-if>
+
+    <!-- /app -->
+    <sc-if value="{{ isDash }}" hint-placeholder-val="{{ false }}">
+      <main data-screen-label="/app" style="max-width:960px;margin:0 auto;padding:28px 16px 64px;display:grid;gap:20px">
+        <sc-if value="{{ dashActive }}" hint-placeholder-val="{{ true }}">
+          <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:18px;padding:24px;box-shadow:0 1px 2px rgba(14,19,48,.06);display:grid;gap:16px;background-image:radial-gradient(520px 260px at 100% 0%,var(--glow,rgba(91,61,245,.16)),transparent 70%),radial-gradient(360px 200px at 0% 100%,var(--glow2,rgba(0,194,168,.12)),transparent 70%)">
+            <p style="display:flex;align-items:center;gap:8px;margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A5068"><span style="width:6px;height:6px;border-radius:9999px;background:var(--a,#00C2A8);white-space:nowrap;flex:none"></span>This month</p>
+            <h1 style="margin:0;font-size:30px;line-height:1.2;letter-spacing:-.018em;font-weight:700;text-wrap:balance">This month your comments made <span style="display:block;margin-top:6px;font-size:56px;line-height:1;letter-spacing:-.035em;font-weight:800;color:var(--ph,#4527D6)">{{ money }}</span></h1>
+            <p style="margin:0;font-size:16px;line-height:1.6;color:#2A3048">Lifetime: <strong>{{ lifetime }}</strong>, of which $3,120 recurring ($640 this month).</p>
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">
+              <span style="display:inline-flex;align-items:center;gap:6px;border-radius:9999px;background:#E3F3E8;color:#0B7A3E;padding:5px 12px;font-size:14px;font-weight:700;white-space:nowrap;flex:none">44x your subscription</span>
+              <span style="font-size:15px;color:#4A5068">Your subscription ($97 a month) cost 2.3% of what your comments made this month.</span>
+            </div>
+            <p style="margin:0;font-size:13px;line-height:1.5;color:#666C84">Only real, attributed purchases: the last comment link or opt-in within 180 days before the sale; refunds are subtracted. Updated 12 min ago.</p>
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;padding-top:4px">
+              <a onClick="{{ goQueue }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:12px 24px;border-radius:10px;background:var(--p,#5B3DF5);color:#FFFFFF;font:600 16px/1 'Open Sans',sans-serif;text-decoration:none;cursor:pointer;animation:{{ pulseAnim }};transition:transform .15s ease,background .15s ease;white-space:nowrap" style-hover="background:var(--ph,#4527D6);color:#FFFFFF;transform:translateY(-1px)">Open approval queue →</a>
+              <a onClick="{{ goReports }}" style="font-size:15px;font-weight:600;cursor:pointer">Full report per video, keyword and reply</a>
+            </div>
+          </section>
+        </sc-if>
+        <sc-if value="{{ dashActive }}" hint-placeholder-val="{{ true }}">
+          <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:16px 20px;display:grid;gap:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+              <p style="display:flex;align-items:center;gap:8px;margin:0;font:600 12px 'Geist Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#4A5068"><span style="position:relative;display:inline-flex;width:8px;height:8px"><span style="position:absolute;inset:0;border-radius:9999px;background:var(--a,#00C2A8);animation:ping 1.6s cubic-bezier(0,0,.2,1) infinite;white-space:nowrap;flex:none"></span><span style="position:relative;width:8px;height:8px;border-radius:9999px;background:var(--a,#00C2A8);white-space:nowrap;flex:none"></span></span>Live activity</p>
+              <span style="font:400 12px 'Geist Mono',monospace;color:#666C84">last hour</span>
+            </div>
+            <sc-for list="{{ activity }}" as="ev" hint-placeholder-count="4">
+              <div style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:8px 6px;margin:0 -6px;border-radius:8px;border-top:1px solid #E6E8F0;animation:{{ ev.anim }}">
+                <span style="display:inline-flex;align-items:center;gap:6px;border-radius:9999px;background:{{ ev.bg }};color:{{ ev.fg }};padding:3px 10px;font-size:12px;font-weight:700;white-space:nowrap">{{ ev.kind }}</span>
+                <span style="font-size:14px;color:#2A3048;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ ev.text }}</span>
+                <span style="font:400 12px 'Geist Mono',monospace;color:#666C84;white-space:nowrap">{{ ev.at }}</span>
+              </div>
+            </sc-for>
+          </section>
+        </sc-if>
+
+        <sc-if value="{{ dashNew }}" hint-placeholder-val="{{ false }}">
+          <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:18px;padding:24px;box-shadow:0 1px 2px rgba(14,19,48,.06);display:grid;gap:18px;background-image:radial-gradient(520px 260px at 100% 0%,var(--glow,rgba(91,61,245,.16)),transparent 70%)">
+            <p style="display:flex;align-items:center;gap:8px;margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A5068"><span style="width:6px;height:6px;border-radius:9999px;background:var(--a,#00C2A8);white-space:nowrap;flex:none"></span>Get started</p>
+            <h1 style="margin:0;font-size:30px;line-height:1.2;letter-spacing:-.018em;font-weight:700">No channel connected yet.</h1>
+            <ol style="margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px">
+              <li style="display:grid;gap:4px;padding:14px;border-radius:12px;background:#FFFFFF;border:1px solid var(--p,#5B3DF5)"><span style="font:500 13px 'Geist Mono',monospace;color:var(--p,#5B3DF5)">01</span><strong style="font-size:15px">Connect your channel</strong></li>
+              <li style="display:grid;gap:4px;padding:14px;border-radius:12px;background:#FFFFFF;border:1px solid #E6E8F0"><span style="font:500 13px 'Geist Mono',monospace;color:#666C84">02</span><strong style="font-size:15px;color:#4A5068">Add a keyword</strong></li>
+              <li style="display:grid;gap:4px;padding:14px;border-radius:12px;background:#FFFFFF;border:1px solid #E6E8F0"><span style="font:500 13px 'Geist Mono',monospace;color:#666C84">03</span><strong style="font-size:15px;color:#4A5068">Approve replies</strong></li>
+            </ol>
+            <div style="display:grid;gap:8px;justify-items:start">
+              <a style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:12px 24px;border-radius:10px;background:var(--p,#5B3DF5);color:#FFFFFF;font:600 16px/1 'Open Sans',sans-serif;text-decoration:none;cursor:pointer;animation:{{ pulseAnim }};transition:transform .15s ease,background .15s ease;white-space:nowrap" style-hover="background:var(--ph,#4527D6);color:#FFFFFF;transform:translateY(-1px)">Connect your channel →</a>
+              <span style="font-size:13px;line-height:1.5;color:#666C84;max-width:60ch">We ask Google only for permission to read comments and post the replies you approve. Every reply waits for your approval.</span>
+            </div>
+          </section>
+        </sc-if>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px">
+          <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;box-shadow:0 1px 2px rgba(14,19,48,.06);display:grid;gap:12px;align-content:start">
+            <h2 style="margin:0;font-size:18px;font-weight:700">Channel</h2>
+            <sc-if value="{{ dashActive }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px;border-radius:10px;background:#F7F8FB">
+                <div style="display:grid;gap:4px;min-width:0">
+                  <strong style="font-size:16px">Zoltan Gero</strong>
+                  <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#0B7A3E"><span style="width:6px;height:6px;border-radius:9999px;background:#0B7A3E;animation:live-dot 1.6s ease-in-out infinite;white-space:nowrap;flex:none"></span>connected</span>
+                </div>
+                <button style="flex:none;display:inline-flex;align-items:center;min-height:40px;padding:8px 14px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:600 14px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:#F0F1F6">Disconnect</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{ dashNew }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0;font-size:15px;color:#666C84">No channel connected yet.</p>
+            </sc-if>
+            <p style="margin:0;font-size:13px;line-height:1.5;color:#666C84">We ask Google only for permission to read comments and post the replies you approve.</p>
+          </section>
+
+          <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;box-shadow:0 1px 2px rgba(14,19,48,.06);display:grid;gap:12px;align-content:start">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+              <h2 style="margin:0;font-size:18px;font-weight:700">Account</h2>
+              <span style="display:inline-flex;align-items:center;border-radius:9999px;background:var(--bs,#EEEBFF);color:var(--lh,#2E1A99);padding:4px 10px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;flex:none">Founding</span>
+            </div>
+            <dl style="margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:15px">
+              <dt style="color:#666C84">Email</dt><dd style="margin:0;overflow-wrap:anywhere">zoltan@vidrev.app</dd>
+              <dt style="color:#666C84">Plan</dt><dd style="margin:0">Founding ($97 a month)</dd>
+              <dt style="color:#666C84">Replies</dt><dd style="margin:0">500 per month, at most 50 per day</dd>
+            </dl>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:14px">
+              <a onClick="{{ goCancel }}" style="color:#666C84;cursor:pointer">Cancel subscription</a>
+              <a onClick="{{ goAdmin }}" style="cursor:pointer">Owner admin</a>
+            </div>
+          </section>
+        </div>
+      </main>
+    </sc-if>
+
+    <!-- /app/queue -->
+    <sc-if value="{{ isQueue }}" hint-placeholder-val="{{ false }}">
+      <main data-screen-label="/app/queue" style="max-width:760px;margin:0 auto;padding:28px 16px 64px;display:grid;gap:20px">
+        <div style="display:grid;gap:10px">
+          <p style="display:flex;align-items:center;gap:8px;margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A5068"><span style="width:6px;height:6px;border-radius:9999px;background:var(--a,#00C2A8);white-space:nowrap;flex:none"></span>{{ qWaitLabel }}</p>
+          <h1 style="margin:0;font-size:28px;line-height:1.2;letter-spacing:-.016em;font-weight:700">Approval queue</h1>
+          <p style="margin:0;font-size:15px;color:#666C84">Every reply waits for your approval.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="display:grid;gap:6px"><span style="font-size:13px;color:#4A5068">This month <strong style="display:inline-block;color:#0E1330;animation:{{ qBump }}">{{ qMonth }}</strong> of 500</span><span style="height:6px;border-radius:9999px;background:#E6E8F0;overflow:hidden;white-space:nowrap;flex:none"><span style="display:block;height:100%;width:{{ qMonthW }};background:linear-gradient(90deg,var(--a,#00C2A8),var(--p,#5B3DF5));border-radius:9999px;transform-origin:left;animation:bar-grow 1.1s cubic-bezier(.2,.7,.2,1) both;transition:width .4s ease"></span></span></div>
+            <div style="display:grid;gap:6px"><span style="font-size:13px;color:#4A5068">Today <strong style="display:inline-block;color:#0E1330;animation:{{ qBump }}">{{ qToday }}</strong> of 50</span><span style="height:6px;border-radius:9999px;background:#E6E8F0;overflow:hidden;white-space:nowrap;flex:none"><span style="display:block;height:100%;width:{{ qTodayW }};background:linear-gradient(90deg,var(--a,#00C2A8),var(--p,#5B3DF5));border-radius:9999px;transform-origin:left;animation:bar-grow 1.1s cubic-bezier(.2,.7,.2,1) both;transition:width .4s ease"></span></span></div>
+          </div>
+        </div>
+
+        <sc-if value="{{ qHas }}" hint-placeholder-val="{{ true }}">
+        <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:18px;padding:20px;box-shadow:0 4px 12px rgba(14,19,48,.08);display:grid;gap:14px;animation:{{ qCard.anim }}">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:14px;color:#4A5068">
+            <span style="font:500 13px 'Geist Mono',monospace;color:#666C84">{{ qPos }}</span>
+            <span style="color:#D5D8E3">·</span>
+            <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%">{{ qCard.video }}</span>
+            <span style="display:inline-flex;align-items:center;border-radius:6px;background:#F0F1F6;color:#2A3048;padding:3px 8px;font:500 13px 'Geist Mono',monospace">{{ qCard.kw }}</span>
+            <span style="display:inline-flex;align-items:center;border-radius:6px;border:1px solid #D5D8E3;color:#2A3048;padding:2px 7px;font-size:11px;font-weight:700;letter-spacing:.06em">{{ qCard.intent }}</span>
+          </div>
+          <blockquote style="margin:0;padding:14px 16px;border-radius:12px;background:#F7F8FB;font-size:16px;line-height:1.6;color:#0E1330">{{ qCard.comment }}</blockquote>
+          <label style="display:grid;gap:6px;font-size:14px;font-weight:600;color:#4A5068">Reply
+            <textarea rows="3" value="{{ qBody }}" onChange="{{ qOnBody }}" style="width:100%;padding:12px 16px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:400 16px/1.5 'Open Sans',sans-serif;resize:vertical" style-focus="outline:none;border-color:var(--p,#5B3DF5);box-shadow:0 0 0 3px var(--ring,rgba(91,61,245,.22))"></textarea>
+          </label>
+          <p style="margin:0;font-size:13px;color:#666C84"><code style="font-family:'Geist Mono',monospace">{link}</code> becomes <code style="font-family:'Geist Mono',monospace;color:#2A3048">{{ qCard.link }}</code></p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <button onClick="{{ qApprove }}" style="position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:12px 24px;border:0;border-radius:10px;background:var(--p,#5B3DF5);color:#FFFFFF;font:600 16px/1 'Open Sans',sans-serif;cursor:pointer;animation:{{ pulseAnim }};transition:transform .15s ease,background .15s ease;white-space:nowrap" style-hover="background:var(--ph,#4527D6);transform:translateY(-1px)" style-active="transform:scale(.97)"><span style="position:absolute;inset:0;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);animation:sheen 3.2s ease-in-out infinite;pointer-events:none"></span>Approve and send</button>
+            <button onClick="{{ qSkip }}" style="display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:600 15px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:#F0F1F6" style-active="transform:scale(.97)">Skip</button>
+            <button onClick="{{ qManual }}" style="display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border:0;border-radius:10px;background:transparent;color:#0E1330;font:600 15px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:#F0F1F6">Copy reply and open comment</button>
+          </div>
+        </section>
+        </sc-if>
+        <sc-if value="{{ qEmpty }}" hint-placeholder-val="{{ false }}">
+        <section style="background:#FFFFFF;border:1px dashed #D5D8E3;border-radius:18px;padding:44px 20px;display:grid;justify-items:center;gap:14px;text-align:center;animation:card-in-a .45s cubic-bezier(.2,.7,.2,1) both">
+          <span style="position:relative;width:56px;height:56px;display:flex;align-items:center;justify-content:center"><span style="position:absolute;inset:0;border-radius:9999px;border:2px solid var(--a,#00C2A8);animation:ping 2.2s cubic-bezier(0,0,.2,1) infinite"></span><span style="position:absolute;inset:14px;border-radius:9999px;border:1px solid var(--a,#00C2A8);opacity:.5"></span><span style="width:12px;height:12px;border-radius:9999px;background:var(--a,#00C2A8)"></span></span>
+          <p style="margin:0;font-size:16px;color:#2A3048;max-width:36ch">No drafts waiting. New keyword comments appear here.</p>
+          <a onClick="{{ qReset }}" style="font:500 12px 'Geist Mono',monospace;color:#666C84;cursor:pointer;text-decoration:underline">Replay demo</a>
+        </section>
+        </sc-if>
+
+        <section style="display:grid;gap:10px">
+          <h2 style="margin:0;font-size:18px;font-weight:700">Waiting to send</h2>
+          <p style="margin:0;font-size:14px;line-height:1.55;color:#666C84">YouTube limits how many replies all apps can post through its API each day; this is YouTube's limit, not ours. Approved replies are sent as soon as it allows, first after the daily reset at midnight Pacific time. You can also post any of them yourself now.</p>
+          <div style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:14px 16px;display:grid;gap:6px">
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><span style="display:inline-flex;border-radius:6px;background:#F0F1F6;color:#2A3048;padding:3px 8px;font:500 13px 'Geist Mono',monospace">PDF</span><span style="display:inline-flex;border-radius:9999px;background:#FBF2DD;color:#6B4E00;padding:3px 10px;font-size:12px;font-weight:700;white-space:nowrap;flex:none">#1 in line</span><span style="font-size:13px;color:#666C84">about 2026-09-27 07:00 UTC</span></div>
+            <p style="margin:0;font-size:15px;color:#2A3048">Sure thing, here it is: go.zoltangero.com/p8Lm2Wd</p>
+          </div>
+        </section>
+
+        <section style="display:grid;gap:10px">
+          <h2 style="margin:0;font-size:18px;font-weight:700">Recent</h2>
+          <div style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;overflow:hidden">
+            <sc-for list="{{ recent }}" as="r" hint-placeholder-count="4">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #E6E8F0">
+                <span style="font:500 14px 'Geist Mono',monospace">{{ r.kw }}</span>
+                <span style="display:inline-flex;border-radius:9999px;background:{{ r.bg }};color:{{ r.fg }};padding:3px 10px;font-size:12px;font-weight:700;text-align:right;white-space:nowrap;flex:none">{{ r.status }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </main>
+    </sc-if>
+
+    <!-- /app/campaigns -->
+    <sc-if value="{{ isCampaigns }}" hint-placeholder-val="{{ false }}">
+      <main data-screen-label="/app/campaigns" style="max-width:860px;margin:0 auto;padding:28px 16px 64px;display:grid;gap:20px">
+        <div style="display:grid;gap:6px">
+          <p style="display:flex;align-items:center;gap:8px;margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A5068"><span style="width:6px;height:6px;border-radius:9999px;background:var(--a,#00C2A8);white-space:nowrap;flex:none"></span>2 keywords</p>
+          <h1 style="margin:0;font-size:28px;line-height:1.2;letter-spacing:-.016em;font-weight:700">Keywords and replies</h1>
+        </div>
+
+        <sc-for list="{{ campaigns }}" as="c" hint-placeholder-count="2">
+          <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;box-shadow:0 1px 2px rgba(14,19,48,.06);display:grid;gap:14px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+              <div style="display:grid;gap:6px;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><strong style="font-size:18px">{{ c.name }}</strong><span style="display:inline-flex;align-items:center;gap:6px;border-radius:9999px;background:{{ c.stBg }};color:{{ c.stFg }};padding:3px 10px;font-size:12px;font-weight:700;white-space:nowrap;flex:none">{{ c.status }}</span></div>
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px;color:#4A5068"><span style="display:inline-flex;border-radius:6px;background:#F0F1F6;color:#2A3048;padding:3px 8px;font:500 13px 'Geist Mono',monospace">{{ c.kw }}</span><span>{{ c.aliases }}</span><span style="display:inline-flex;border-radius:6px;border:1px solid #D5D8E3;padding:2px 7px;font-size:11px;font-weight:700;letter-spacing:.06em;color:#2A3048">{{ c.intent }}</span></div>
+                <span style="font-size:14px;color:#666C84;overflow-wrap:anywhere">{{ c.videos }} · {{ c.dest }}</span>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button style="display:inline-flex;align-items:center;min-height:40px;padding:8px 14px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:600 14px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:#F0F1F6">{{ c.toggle }}</button>
+                <button style="display:inline-flex;align-items:center;min-height:40px;padding:8px 12px;border:0;border-radius:10px;background:transparent;color:#A33A00;font:600 14px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:#FFF1E8">Delete</button>
+              </div>
+            </div>
+            <div style="display:grid;gap:8px;padding:12px;border-radius:10px;background:#F7F8FB">
+              <span style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#4A5068">Link for descriptions and pinned comments</span>
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><code style="font:500 14px 'Geist Mono',monospace;color:#0E1330;overflow-wrap:anywhere">{{ c.link }}</code><button onClick="{{ c.copy }}" style="display:inline-flex;align-items:center;min-height:32px;padding:4px 10px;border:1px solid #D5D8E3;border-radius:8px;background:#FFFFFF;color:#0E1330;font:600 13px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap">{{ c.copyLabel }}</button></div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap"><input placeholder="Video link for a per-video link" style="flex:1 1 220px;min-height:40px;padding:8px 12px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;font:400 15px 'Open Sans',sans-serif"><button style="display:inline-flex;align-items:center;min-height:40px;padding:8px 14px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:600 14px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap">Get link</button></div>
+            </div>
+            <div style="display:grid;gap:8px">
+              <h3 style="margin:0;font-size:15px;font-weight:700">Approved reply templates</h3>
+              <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #E6E8F0"><code style="font:500 12px 'Geist Mono',monospace;background:#F0F1F6;border-radius:6px;padding:2px 6px">en</code><span style="flex:1;font-size:15px">{{ c.tpl }}</span><button style="border:0;background:transparent;color:#4A5068;font:600 14px 'Open Sans',sans-serif;cursor:pointer;min-height:36px;padding:0 8px;border-radius:8px" style-hover="background:#F0F1F6">Remove</button></div>
+              <details style="font-size:15px"><summary style="cursor:pointer;font-weight:600;color:var(--l,#4527D6);padding:6px 0">Add template</summary>
+                <div style="display:grid;gap:10px;padding-top:8px">
+                  <label style="display:grid;gap:6px;font-size:14px;font-weight:600;color:#4A5068">Language<select style="min-height:44px;padding:8px 12px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;font:400 16px 'Open Sans',sans-serif"><option>en</option><option>hu</option></select></label>
+                  <label style="display:grid;gap:6px;font-size:14px;font-weight:600;color:#4A5068">Reply text (use {link} once where the link goes)<textarea rows="2" style="padding:12px 16px;border:1px solid #D5D8E3;border-radius:10px;font:400 16px 'Open Sans',sans-serif">Here you go: {link}</textarea></label>
+                  <button style="justify-self:start;display:inline-flex;align-items:center;min-height:40px;padding:8px 16px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:600 15px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap">Add template</button>
+                </div>
+              </details>
+            </div>
+          </section>
+        </sc-for>
+
+        <section style="background:#FFFFFF;border:1px solid var(--p,#5B3DF5);border-radius:18px;padding:24px;box-shadow:0 4px 12px rgba(14,19,48,.08);display:grid;gap:14px">
+          <p style="display:flex;align-items:center;gap:8px;margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ph,#4527D6)"><span style="width:6px;height:6px;border-radius:9999px;background:var(--a,#00C2A8);white-space:nowrap;flex:none"></span>New keyword</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px">
+            <label style="display:grid;gap:6px;font-size:14px;font-weight:600;color:#4A5068">Keyword viewers comment (whole word, any case)<input placeholder="GUIDE" style="min-height:44px;padding:12px 16px;border:1px solid #D5D8E3;border-radius:10px;font:400 16px 'Open Sans',sans-serif"></label>
+            <label style="display:grid;gap:6px;font-size:14px;font-weight:600;color:#4A5068">Other spellings (comma separated, optional)<input placeholder="guides, pdf" style="min-height:44px;padding:12px 16px;border:1px solid #D5D8E3;border-radius:10px;font:400 16px 'Open Sans',sans-serif"></label>
+            <label style="display:grid;gap:6px;font-size:14px;font-weight:600;color:#4A5068">Name (what the viewer gets)<input placeholder="Free guide" style="min-height:44px;padding:12px 16px;border:1px solid #D5D8E3;border-radius:10px;font:400 16px 'Open Sans',sans-serif"></label>
+            <label style="display:grid;gap:6px;font-size:14px;font-weight:600;color:#4A5068">Intent<select style="min-height:44px;padding:8px 12px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;font:400 16px 'Open Sans',sans-serif"><option>HOT (ready to buy)</option><option selected>WARM</option><option>COLD</option></select></label>
+          </div>
+          <label style="display:grid;gap:6px;font-size:14px;font-weight:600;color:#4A5068">Your opt-in page<input placeholder="https://yourdomain.com/guide" style="min-height:44px;padding:12px 16px;border:1px solid #D5D8E3;border-radius:10px;font:400 16px 'Open Sans',sans-serif"></label>
+          <label style="display:grid;gap:6px;font-size:14px;font-weight:600;color:#4A5068">Only these videos (links, optional; empty means all videos)<textarea rows="2" style="padding:12px 16px;border:1px solid #D5D8E3;border-radius:10px;font:400 16px 'Open Sans',sans-serif"></textarea></label>
+          <div style="display:grid;gap:8px;justify-items:start">
+            <button style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:12px 24px;border:0;border-radius:10px;background:var(--p,#5B3DF5);color:#FFFFFF;font:600 16px/1 'Open Sans',sans-serif;cursor:pointer;animation:{{ pulseAnim }};transition:transform .15s ease,background .15s ease;white-space:nowrap" style-hover="background:var(--ph,#4527D6);transform:translateY(-1px)">Start watching →</button>
+            <span style="font-size:13px;color:#666C84">Only comments posted after you start watching get a draft. Nothing is posted until you approve it.</span>
+          </div>
+        </section>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px">
+          <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;display:grid;gap:12px;align-content:start">
+            <h2 style="margin:0;font-size:18px;font-weight:700">Default reply language</h2>
+            <div style="display:flex;gap:8px"><select style="flex:1;min-height:44px;padding:8px 12px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;font:400 16px 'Open Sans',sans-serif"><option>en</option></select><button style="display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:600 15px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap">Save</button></div>
+            <p style="margin:0;font-size:13px;line-height:1.5;color:#666C84">A reply uses the commenter's language only when you have a template in it; otherwise this language, then English.</p>
+          </section>
+          <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;display:grid;gap:12px;align-content:start">
+            <h2 style="margin:0;font-size:18px;font-weight:700">AI drafts</h2>
+            <p style="margin:0;font-size:14px;color:#666C84">Current: included AI (no setup needed). The commenter's name is never sent to the AI.</p>
+            <label style="display:grid;gap:6px;font-size:14px;font-weight:600;color:#4A5068">Provider<select style="min-height:44px;padding:8px 12px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;font:400 16px 'Open Sans',sans-serif"><option>Included AI</option><option>My own Gemini key (billing enabled)</option><option>My own OpenAI key</option><option>My own Anthropic key</option></select></label>
+            <button style="justify-self:start;display:inline-flex;align-items:center;min-height:40px;padding:8px 16px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:600 15px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap">Save AI settings</button>
+          </section>
+        </div>
+      </main>
+    </sc-if>
+
+    <!-- /app/reports -->
+    <sc-if value="{{ isReports }}" hint-placeholder-val="{{ false }}">
+      <main data-screen-label="/app/reports" style="max-width:1080px;margin:0 auto;padding:28px 16px 64px;display:grid;gap:20px">
+        <div style="display:grid;gap:6px">
+          <p style="display:flex;align-items:center;gap:8px;margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A5068"><span style="width:6px;height:6px;border-radius:9999px;background:var(--a,#00C2A8);white-space:nowrap;flex:none"></span>Updated 12 min ago</p>
+          <h1 style="margin:0;font-size:28px;line-height:1.2;letter-spacing:-.016em;font-weight:700">Reports</h1>
+        </div>
+        <sc-if value="{{ firstDay }}" hint-placeholder-val="{{ false }}">
+        <p role="status" style="margin:0;border-radius:12px;border:1px solid rgba(11,122,62,.3);background:#E3F3E8;padding:12px 14px;font-size:15px;color:#0E1330">The first report is being calculated. It appears within a minute or two.</p>
+        <section aria-hidden="true" style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;display:grid;gap:12px"><span style="display:block;height:22px;width:60%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span><span style="display:block;height:14px;width:40%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span><span style="display:block;height:10px;width:80%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span></section>
+        <section aria-hidden="true" style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:16px"><div style="display:grid;gap:8px"><span style="display:block;height:10px;width:60%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span><span style="display:block;height:22px;width:80%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span></div><div style="display:grid;gap:8px"><span style="display:block;height:10px;width:60%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span><span style="display:block;height:22px;width:80%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span></div><div style="display:grid;gap:8px"><span style="display:block;height:10px;width:60%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span><span style="display:block;height:22px;width:80%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span></div><div style="display:grid;gap:8px"><span style="display:block;height:10px;width:60%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span><span style="display:block;height:22px;width:80%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span></div><div style="display:grid;gap:8px"><span style="display:block;height:10px;width:60%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span><span style="display:block;height:22px;width:80%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span></div><div style="display:grid;gap:8px"><span style="display:block;height:10px;width:60%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span><span style="display:block;height:22px;width:80%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span></div><div style="display:grid;gap:8px"><span style="display:block;height:10px;width:60%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span><span style="display:block;height:22px;width:80%;border-radius:8px;background:linear-gradient(90deg,#F0F1F6 0%,#E6E8F0 50%,#F0F1F6 100%);background-size:800px 100%;animation:shimmer 1.4s linear infinite"></span></div></section>
+        </sc-if>
+        <sc-if value="{{ notFirstDay }}" hint-placeholder-val="{{ true }}">
+        <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;display:grid;gap:8px">
+          <p style="margin:0;font-size:22px;line-height:1.3;font-weight:600">This month your comments made <strong style="font-weight:800;color:var(--ph,#4527D6)">{{ money }}</strong>.</p>
+          <p style="margin:0;font-size:15px;color:#2A3048">Lifetime: <strong>{{ lifetime }}</strong>, of which $3,120 recurring ($640 this month).</p>
+          <p style="margin:0;font-size:13px;color:#666C84">Only real, attributed purchases: the last comment link or opt-in within 180 days before the sale; refunds are subtracted.</p>
+        </section>
+
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px">
+          <div style="display:flex;gap:2px;padding:3px;border-radius:10px;background:#F0F1F6;overflow-x:auto;max-width:100%">
+            <sc-for list="{{ periods }}" as="p" hint-placeholder-count="5">
+              <button onClick="{{ p.go }}" style="flex:none;min-height:36px;padding:6px 12px;border:0;border-radius:8px;background:{{ p.bg }};box-shadow:{{ p.shadow }};color:{{ p.color }};font:600 14px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap;white-space:nowrap">{{ p.label }}</button>
+            </sc-for>
+          </div>
+          <span style="font-size:13px;color:#666C84">2026-09-01 to 2026-09-26 (Europe/Budapest)</span>
+        </div>
+
+        <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:8px;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr))">
+          <sc-for list="{{ funnel }}" as="f" hint-placeholder-count="7">
+            <div style="display:grid;gap:4px;padding:12px;border-right:1px solid #E6E8F0">
+              <span style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:{{ f.labelColor }}">{{ f.label }}</span>
+              <span style="font-size:24px;font-weight:700;letter-spacing:-.01em;color:{{ f.valueColor }}">{{ f.value }}</span>
+              <sc-if value="{{ f.conv }}" hint-placeholder-val="{{ false }}"><span style="justify-self:start;border-radius:9999px;background:var(--as,#EEEBFF);color:var(--ast,#3A1FC2);padding:2px 8px;font-size:12px;font-weight:700;white-space:nowrap;flex:none">{{ f.conv }}</span></sc-if>
+            </div>
+          </sc-for>
+        </section>
+
+        <sc-for list="{{ tables }}" as="t" hint-placeholder-count="3">
+          <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;overflow:hidden">
+            <div style="padding:16px 16px 8px;display:grid;gap:4px"><h2 style="margin:0;font-size:18px;font-weight:700">{{ t.title }}</h2><sc-if value="{{ t.note }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:14px;color:#666C84">{{ t.note }}</p></sc-if></div>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:15px">
+                <thead><tr>
+                  <th style="text-align:left;padding:10px 16px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#4A5068;border-bottom:1px solid #E6E8F0;white-space:nowrap">{{ t.first }}</th>
+                  <sc-for list="{{ cols }}" as="h" hint-placeholder-count="8"><th style="text-align:right;padding:10px 12px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#4A5068;border-bottom:1px solid #E6E8F0;white-space:nowrap">{{ h }}</th></sc-for>
+                </tr></thead>
+                <tbody>
+                  <sc-for list="{{ t.rows }}" as="r" hint-placeholder-count="3">
+                    <tr style-hover="background:#F7F8FB">
+                      <td style="padding:12px 16px;border-bottom:1px solid #E6E8F0;min-width:220px;max-width:320px"><a style="color:var(--l,#4527D6);text-decoration:none;font-weight:600">{{ r.label }}</a></td>
+                      <sc-for list="{{ r.cells }}" as="v" hint-placeholder-count="8"><td style="padding:12px;border-bottom:1px solid #E6E8F0;text-align:right;white-space:nowrap">{{ v }}</td></sc-for>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </sc-for>
+
+        </sc-if>
+        <section id="settings" style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;display:grid;gap:14px">
+          <h2 style="margin:0;font-size:18px;font-weight:700">Report settings</h2>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px;max-width:640px">
+            <label style="display:grid;gap:6px;font-size:14px;font-weight:600;color:#4A5068">Time zone for days and months<select style="min-height:44px;padding:8px 12px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;font:400 16px 'Open Sans',sans-serif"><option>Europe/Budapest</option></select></label>
+            <label style="display:grid;gap:6px;font-size:14px;font-weight:600;color:#4A5068">Reporting currency<input placeholder="Automatic (now USD)" style="min-height:44px;padding:12px 16px;border:1px solid #D5D8E3;border-radius:10px;font:400 16px 'Open Sans',sans-serif"></label>
+          </div>
+          <label style="display:flex;gap:10px;align-items:center;font-size:15px"><input type="checkbox" checked style="width:18px;height:18px;accent-color:var(--p,#5B3DF5)">Weekly email on Mondays: what your comments made in the last 7 days</label>
+          <p style="margin:0;font-size:13px;color:#666C84">Leave the currency empty to follow your connected revenue source. Amounts in other currencies are listed separately, never converted.</p>
+          <button style="justify-self:start;display:inline-flex;align-items:center;min-height:44px;padding:12px 24px;border:0;border-radius:10px;background:var(--p,#5B3DF5);color:#FFFFFF;font:600 16px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:var(--ph,#4527D6);transform:translateY(-1px)">Save</button>
+        </section>
+      </main>
+    </sc-if>
+
+    <!-- /app/domain -->
+    <sc-if value="{{ isDomain }}" hint-placeholder-val="{{ false }}">
+      <main data-screen-label="/app/domain" style="max-width:760px;margin:0 auto;padding:28px 16px 64px;display:grid;gap:20px">
+        <div style="display:grid;gap:8px">
+          <p style="display:flex;align-items:center;gap:8px;margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A5068"><span style="width:6px;height:6px;border-radius:9999px;background:var(--a,#00C2A8);white-space:nowrap;flex:none"></span>Link domain</p>
+          <h1 style="margin:0;font-size:28px;line-height:1.2;letter-spacing:-.016em;font-weight:700">Your link domain</h1>
+          <p style="margin:0;font-size:15px;line-height:1.6;color:#4A5068">Reply links run on your own domain, for example <code style="font-family:'Geist Mono',monospace">go.yourdomain.com/k3x9Tq2</code>. Every click is measured and your opt-in page receives the tracking id. vidrev never touches your website or email.</p>
+        </div>
+        <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:18px;padding:20px;box-shadow:0 4px 12px rgba(14,19,48,.08);display:grid;gap:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <h2 style="margin:0;font:600 20px 'Geist Mono',monospace;overflow-wrap:anywhere">go.zoltangero.com</h2>
+            <span style="display:inline-flex;align-items:center;gap:6px;border-radius:9999px;background:#FBF2DD;color:#6B4E00;padding:4px 10px;font-size:12px;font-weight:700;white-space:nowrap;flex:none"><span style="width:6px;height:6px;border-radius:9999px;background:#E5A400;animation:live-dot 1.6s ease-in-out infinite;white-space:nowrap;flex:none"></span>Waiting for the DNS record</span>
+          </div>
+          <div style="display:grid;gap:8px;justify-items:start">
+            <a style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:12px 24px;border-radius:10px;background:var(--p,#5B3DF5);color:#FFFFFF;font:600 16px/1 'Open Sans',sans-serif;text-decoration:none;cursor:pointer;animation:{{ pulseAnim }};transition:transform .15s ease,background .15s ease;white-space:nowrap" style-hover="background:var(--ph,#4527D6);color:#FFFFFF;transform:translateY(-1px)">Connect automatically →</a>
+            <span style="font-size:13px;color:#666C84">You approve one record at your DNS provider. Or add it by hand:</span>
+          </div>
+          <div style="display:grid;gap:8px">
+            <p style="margin:0;font-size:15px">Add this one record where the DNS of your domain is managed (Cloudflare):</p>
+            <div style="border:1px solid #E6E8F0;border-radius:10px;overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:14px">
+                <thead><tr style="background:#F7F8FB"><th style="text-align:left;padding:8px 12px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#4A5068">Type</th><th style="text-align:left;padding:8px 12px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#4A5068">Name / Host</th><th style="text-align:left;padding:8px 12px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#4A5068">Value / Target</th></tr></thead>
+                <tbody><tr><td style="padding:10px 12px;border-top:1px solid #E6E8F0;font-weight:700">CNAME</td><td style="padding:10px 12px;border-top:1px solid #E6E8F0;font-family:'Geist Mono',monospace">go</td><td style="padding:10px 12px;border-top:1px solid #E6E8F0;font-family:'Geist Mono',monospace;white-space:nowrap">links.vidrev.app</td></tr></tbody>
+              </table>
+            </div>
+            <p style="margin:0;font-size:13px;line-height:1.5;color:#666C84">Where: DNS, then Records. Set the proxy status to DNS only (grey cloud). <a>Provider guide</a></p>
+            <p style="margin:0;font-size:13px;line-height:1.5;color:#666C84">We check automatically and email you when it is live; this usually takes a few minutes.</p>
+            <a style="font-size:15px;font-weight:600;cursor:pointer">Send these steps to my web person</a>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:4px;border-top:1px dashed #D5D8E3;padding-top:14px">
+            <button style="display:inline-flex;align-items:center;min-height:40px;padding:8px 16px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:600 15px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:#F0F1F6">Check now</button>
+            <button style="display:inline-flex;align-items:center;min-height:40px;padding:8px 12px;border:0;border-radius:10px;background:transparent;color:#A33A00;font:600 15px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:#FFF1E8">Remove domain</button>
+          </div>
+          <p style="margin:0;font-size:13px;line-height:1.5;color:#666C84">Links already posted keep go.zoltangero.com. They stop working if the DNS record is deleted, so keep it as long as those replies matter.</p>
+        </section>
+        <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;display:grid;gap:10px">
+          <h2 style="margin:0;font-size:18px;font-weight:700">On your opt-in page</h2>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#4A5068">Every link click adds <code style="font-family:'Geist Mono',monospace">c2c_tid</code> and UTM parameters (utm_content is the same id) to your opt-in page address. Most form tools store UTM values on their own. To be sure, add a hidden field named <code style="font-family:'Geist Mono',monospace">c2c_tid</code> to your form and this line to the page:</p>
+          <pre style="margin:0;white-space:pre-wrap;word-break:break-all;font:400 13px/1.6 'Geist Mono',monospace;background:#F7F8FB;border:1px solid #E6E8F0;padding:12px;border-radius:10px">&lt;script src="https://app.vidrev.app/c2c.js" async&gt;&lt;/script&gt;</pre>
+          <p style="margin:0;font-size:14px;color:#666C84">It fills the field, also when the visitor comes back days later.</p>
+        </section>
+      </main>
+    </sc-if>
+
+    <!-- /app/integrations -->
+    <sc-if value="{{ isIntegrations }}" hint-placeholder-val="{{ false }}">
+      <main data-screen-label="/app/integrations" style="max-width:860px;margin:0 auto;padding:28px 16px 64px;display:grid;gap:20px">
+        <div style="display:grid;gap:8px">
+          <p style="display:flex;align-items:center;gap:8px;margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A5068"><span style="width:6px;height:6px;border-radius:9999px;background:var(--a,#00C2A8);white-space:nowrap;flex:none"></span>Revenue sources</p>
+          <h1 style="margin:0;font-size:28px;line-height:1.2;letter-spacing:-.016em;font-weight:700">Integrations</h1>
+          <p style="margin:0;font-size:15px;line-height:1.6;color:#4A5068">Send every comment, click, subscriber and buyer to your own system: a CRM, n8n, Make, Zapier or your own server. Events never contain comment text or commenter names.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px">
+          <section style="background:#FFFFFF;border:1px solid var(--p,#5B3DF5);border-radius:18px;padding:20px;box-shadow:0 4px 12px rgba(14,19,48,.08);display:grid;gap:12px;align-content:start">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2 style="margin:0;font-size:18px;font-weight:700">GoHighLevel</h2><span style="border-radius:9999px;background:#F0F1F6;color:#4A5068;padding:3px 10px;font-size:12px;font-weight:700;white-space:nowrap;flex:none">Not connected</span></div>
+            <p style="margin:0;font-size:14px;line-height:1.55;color:#4A5068">Connect your GoHighLevel sub-account. Subscribers from your comments get tagged in GoHighLevel, and buyers and payments come back here, so each video shows what it earned.</p>
+            <a style="justify-self:start;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:12px 24px;border-radius:10px;background:var(--p,#5B3DF5);color:#FFFFFF;font:600 16px/1 'Open Sans',sans-serif;text-decoration:none;cursor:pointer;animation:{{ pulseAnim }};transition:transform .15s ease,background .15s ease;white-space:nowrap" style-hover="background:var(--ph,#4527D6);color:#FFFFFF;transform:translateY(-1px)">Connect GoHighLevel →</a>
+          </section>
+          <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;display:grid;gap:12px;align-content:start">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2 style="margin:0;font-size:18px;font-weight:700">Stripe</h2><span style="display:inline-flex;align-items:center;gap:6px;border-radius:9999px;background:#E3F3E8;color:#0B7A3E;padding:3px 10px;font-size:12px;font-weight:700;white-space:nowrap;flex:none"><span style="width:6px;height:6px;border-radius:9999px;background:#0B7A3E;animation:live-dot 1.6s ease-in-out infinite;white-space:nowrap;flex:none"></span>connected</span></div>
+            <p style="margin:0;font-size:14px;line-height:1.55;color:#4A5068">Read your Stripe payments, so each video shows what it earned. We use a restricted key that can only read: it cannot charge, refund or change anything.</p>
+            <p style="margin:0;font:400 13px 'Geist Mono',monospace;color:#666C84">Key ending 4f2a · last sync 2026-09-26 08:52 UTC</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap"><button style="display:inline-flex;align-items:center;min-height:40px;padding:8px 14px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:600 14px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap">Sync now</button><button style="display:inline-flex;align-items:center;min-height:40px;padding:8px 12px;border:0;border-radius:10px;background:transparent;color:#A33A00;font:600 14px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap">Disconnect</button></div>
+          </section>
+        </div>
+
+        <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;display:grid;gap:12px">
+          <h2 style="margin:0;font-size:18px;font-weight:700">Webhook endpoints</h2>
+          <div style="display:grid;gap:6px;padding:12px;border-radius:10px;background:#F7F8FB">
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><strong>n8n</strong><span style="border-radius:9999px;background:#E3F3E8;color:#0B7A3E;padding:2px 8px;font-size:12px;font-weight:700;white-space:nowrap;flex:none">on</span></div>
+            <code style="font:400 13px 'Geist Mono',monospace;word-break:break-all">https://n8n.zoltangero.com/webhook/vidrev</code>
+            <span style="font-size:13px;color:#666C84">Events: all · last delivered 2026-09-26 08:41 UTC</span>
+            <details style="font-size:14px"><summary style="cursor:pointer;font-weight:600;color:var(--l,#4527D6)">Signing secret</summary><p style="margin:8px 0 0;font-size:13px">Every request carries <code style="font-family:'Geist Mono',monospace">X-Signature: sha256=&lt;HMAC-SHA256 of the raw body&gt;</code> made with this secret.</p></details>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;padding-top:4px">
+              <sc-for list="{{ endpointActions }}" as="a" hint-placeholder-count="4"><button style="display:inline-flex;align-items:center;min-height:36px;padding:6px 12px;border:1px solid #D5D8E3;border-radius:8px;background:#FFFFFF;color:#0E1330;font:600 13px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:#F0F1F6">{{ a }}</button></sc-for>
+            </div>
+          </div>
+          <details style="font-size:15px"><summary style="cursor:pointer;font-weight:600;color:var(--l,#4527D6);padding:4px 0">Add an endpoint</summary>
+            <div style="display:grid;gap:12px;padding-top:10px">
+              <label style="display:grid;gap:6px;font-size:14px;font-weight:600;color:#4A5068">Endpoint URL (https)<input placeholder="https://hooks.example.com/vidrev" style="min-height:44px;padding:12px 16px;border:1px solid #D5D8E3;border-radius:10px;font:400 16px 'Open Sans',sans-serif"></label>
+              <label style="display:grid;gap:6px;font-size:14px;font-weight:600;color:#4A5068">Name (optional)<input placeholder="n8n, CRM..." style="min-height:44px;padding:12px 16px;border:1px solid #D5D8E3;border-radius:10px;font:400 16px 'Open Sans',sans-serif"></label>
+              <fieldset style="border:1px solid #E6E8F0;border-radius:10px;padding:10px 14px;display:grid;gap:6px"><legend style="font-size:14px;font-weight:600;color:#4A5068;padding:0 4px">Events (none ticked means all)</legend>
+                <sc-for list="{{ events }}" as="e" hint-placeholder-count="5"><label style="display:flex;gap:8px;align-items:center;font-size:15px;min-height:32px"><input type="checkbox" style="width:18px;height:18px;accent-color:var(--p,#5B3DF5)">{{ e }}</label></sc-for>
+              </fieldset>
+              <button style="justify-self:start;display:inline-flex;align-items:center;min-height:44px;padding:12px 20px;border:0;border-radius:10px;background:var(--l,#4527D6);color:#FFFFFF;font:600 15px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:var(--lh,#2E1A99)">Add endpoint</button>
+            </div>
+          </details>
+        </section>
+
+        <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;display:grid;gap:12px">
+          <h2 style="margin:0;font-size:18px;font-weight:700">Send us subscribers and buyers</h2>
+          <p style="margin:0;font-size:14px;line-height:1.55;color:#4A5068">Any form tool, checkout, Zapier, Make or n8n can tell us when someone opts in or buys. That is how a comment turns into a subscriber, a buyer and revenue. Send a <code style="font-family:'Geist Mono',monospace">POST</code> with your token:</p>
+          <div style="display:grid;border:1px solid #E6E8F0;border-radius:10px;overflow:hidden">
+            <sc-for list="{{ hooks }}" as="h" hint-placeholder-count="3">
+              <div style="display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;padding:10px 12px;border-bottom:1px solid #E6E8F0;align-items:center"><strong style="font-size:14px">{{ h.k }}</strong><code style="font:400 13px 'Geist Mono',monospace;word-break:break-all">{{ h.v }}</code></div>
+            </sc-for>
+          </div>
+          <button style="justify-self:start;display:inline-flex;align-items:center;min-height:40px;padding:8px 14px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:600 14px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap">New token</button>
+        </section>
+
+        <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;overflow:hidden">
+          <h2 style="margin:0;padding:16px 16px 8px;font-size:18px;font-weight:700">Recent deliveries</h2>
+          <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:14px"><tbody>
+            <sc-for list="{{ deliveries }}" as="d" hint-placeholder-count="3"><tr><td style="padding:10px 16px;border-top:1px solid #E6E8F0;font-family:'Geist Mono',monospace;font-size:13px;white-space:nowrap;color:#4A5068">{{ d.at }}</td><td style="padding:10px 12px;border-top:1px solid #E6E8F0">{{ d.event }}</td><td style="padding:10px 16px;border-top:1px solid #E6E8F0;text-align:right"><span style="border-radius:9999px;background:{{ d.bg }};color:{{ d.fg }};padding:2px 8px;font-size:12px;font-weight:700;white-space:nowrap">{{ d.status }}</span></td></tr></sc-for>
+          </tbody></table></div>
+        </section>
+      </main>
+    </sc-if>
+
+    <!-- /app/cancel -->
+    <sc-if value="{{ isCancel }}" hint-placeholder-val="{{ false }}">
+      <main data-screen-label="/app/cancel" style="max-width:640px;margin:0 auto;padding:28px 16px 64px;display:grid;gap:20px">
+        <h1 style="margin:0;font-size:28px;line-height:1.2;letter-spacing:-.016em;font-weight:700">Before you cancel</h1>
+        <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:18px;padding:24px;display:grid;gap:16px">
+          <p style="margin:0;font-size:20px;line-height:1.4">Your comments made <strong style="font-weight:800;color:var(--ph,#4527D6)">{{ lifetime }}</strong> since you started, $4,280 of it this month.</p>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+            <div style="display:grid;gap:2px;padding:12px;border-radius:10px;background:#F7F8FB"><span style="font-size:22px;font-weight:700">{{ cClicks }}</span><span style="font-size:13px;color:#4A5068">clicks</span></div>
+            <div style="display:grid;gap:2px;padding:12px;border-radius:10px;background:#F7F8FB"><span style="font-size:22px;font-weight:700">{{ cSubs }}</span><span style="font-size:13px;color:#4A5068">subscribers</span></div>
+            <div style="display:grid;gap:2px;padding:12px;border-radius:10px;background:#F7F8FB"><span style="font-size:22px;font-weight:700">{{ cBuyers }}</span><span style="font-size:13px;color:#4A5068">buyers</span></div>
+          </div>
+          <p style="margin:0;font-size:14px;color:#666C84">Traced back to your comment replies.</p>
+        </section>
+        <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;display:grid;gap:12px">
+          <h2 style="margin:0;font-size:18px;font-weight:700">What happens when you cancel</h2>
+          <ul style="margin:0;padding:0;list-style:none;display:grid;gap:10px">
+            <sc-for list="{{ cancelItems }}" as="c" hint-placeholder-count="4"><li style="display:grid;grid-template-columns:20px 1fr;gap:10px;font-size:15px;line-height:1.55"><span style="margin-top:7px;width:8px;height:8px;border-radius:9999px;background:{{ c.dot }};white-space:nowrap;flex:none"></span><span>{{ c.t }}</span></li></sc-for>
+          </ul>
+        </section>
+        <div style="display:flex;justify-content:flex-start">
+          <button style="display:inline-flex;align-items:center;min-height:44px;padding:8px 18px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:600 15px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:#F0F1F6">Manage or cancel my subscription</button>
+        </div>
+      </main>
+    </sc-if>
+
+    <!-- /admin -->
+    <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+      <main data-screen-label="/admin" style="max-width:1080px;margin:0 auto;padding:28px 16px 64px;display:grid;gap:20px">
+        <div style="display:grid;gap:6px">
+          <p style="display:flex;align-items:center;gap:8px;margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A5068"><span style="width:6px;height:6px;border-radius:9999px;background:var(--l,#4527D6);white-space:nowrap;flex:none"></span>Owner only</p>
+          <h1 style="margin:0;font-size:28px;line-height:1.2;letter-spacing:-.016em;font-weight:700">Owner admin</h1>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">
+          <sc-for list="{{ adminStats }}" as="s" hint-placeholder-count="4"><div style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:14px 16px;display:grid;gap:2px"><span style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#4A5068">{{ s.k }}</span><span style="font-size:24px;font-weight:700">{{ s.v }}</span></div></sc-for>
+        </div>
+        <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;display:grid;gap:12px">
+          <h2 style="margin:0;font-size:18px;font-weight:700">Grant access</h2>
+          <p style="margin:0;font-size:14px;color:#666C84">Creates the account (or updates its plan) and emails a sign-in link. Use it for partner access (ghl_affiliate_free).</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <input placeholder="email" style="flex:1 1 240px;min-height:44px;padding:12px 16px;border:1px solid #D5D8E3;border-radius:10px;font:400 16px 'Open Sans',sans-serif">
+            <select style="min-height:44px;padding:8px 12px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;font:400 15px 'Geist Mono',monospace"><option>ghl_affiliate_free</option><option>founding</option></select>
+            <button style="display:inline-flex;align-items:center;min-height:44px;padding:12px 24px;border:0;border-radius:10px;background:var(--p,#5B3DF5);color:#FFFFFF;font:600 16px/1 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:var(--ph,#4527D6);transform:translateY(-1px)">Grant</button>
+          </div>
+        </section>
+        <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;overflow:hidden">
+          <h2 style="margin:0;padding:16px 16px 8px;font-size:18px;font-weight:700">Accounts</h2>
+          <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:14px">
+            <thead><tr><sc-for list="{{ adminCols }}" as="h" hint-placeholder-count="6"><th style="text-align:left;padding:10px 12px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#4A5068;border-bottom:1px solid #E6E8F0;white-space:nowrap">{{ h }}</th></sc-for></tr></thead>
+            <tbody><sc-for list="{{ accounts }}" as="a" hint-placeholder-count="3"><tr>
+              <td style="padding:10px 12px;border-bottom:1px solid #E6E8F0;white-space:nowrap">{{ a.email }}</td>
+              <td style="padding:10px 12px;border-bottom:1px solid #E6E8F0;white-space:nowrap"><span style="border-radius:9999px;background:{{ a.bg }};color:{{ a.fg }};padding:2px 8px;font-size:12px;font-weight:700;white-space:nowrap;flex:none">{{ a.status }}</span></td>
+              <td style="padding:10px 12px;border-bottom:1px solid #E6E8F0;white-space:nowrap;font-family:'Geist Mono',monospace;font-size:13px">{{ a.plan }}</td>
+              <td style="padding:10px 12px;border-bottom:1px solid #E6E8F0">{{ a.ch }}</td>
+              <td style="padding:10px 12px;border-bottom:1px solid #E6E8F0;white-space:nowrap;font-family:'Geist Mono',monospace;font-size:13px;color:#4A5068">{{ a.created }}</td>
+              <td style="padding:10px 12px;border-bottom:1px solid #E6E8F0;white-space:nowrap"><div style="display:flex;gap:6px"><button style="min-height:32px;padding:4px 10px;border:1px solid #D5D8E3;border-radius:8px;background:#FFFFFF;font:600 13px 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap">{{ a.action }}</button><button style="min-height:32px;padding:4px 10px;border:1px solid #D5D8E3;border-radius:8px;background:#FFFFFF;font:600 13px 'Open Sans',sans-serif;cursor:pointer;white-space:nowrap">Block fallback links</button></div></td>
+            </tr></sc-for></tbody>
+          </table></div>
+        </section>
+        <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;display:grid;gap:8px">
+          <h2 style="margin:0;font-size:18px;font-weight:700">Audit my channel</h2>
+          <p style="margin:0;font-size:14px;color:#666C84">Last 7 days: 64 audits requested, 61 finished, 23 full reports requested. Audit quota today: 1,840 of 10,000 units used.</p>
+        </section>
+      </main>
+    </sc-if>
+
+    <!-- /audit -->
+    <sc-if value="{{ isAudit }}" hint-placeholder-val="{{ false }}">
+      <main data-screen-label="/audit" style="max-width:560px;margin:0 auto;padding:24px 16px 64px;display:grid;gap:20px">
+        <div style="display:grid;gap:12px">
+          <span style="justify-self:start;display:inline-flex;align-items:center;gap:6px;border-radius:9999px;background:var(--bs,#EEEBFF);color:var(--lh,#2E1A99);padding:4px 10px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;flex:none">Free · no sign-in</span>
+          <h1 style="margin:0;font-size:36px;line-height:1.15;letter-spacing:-.02em;font-weight:800">Audit my channel</h1>
+          <p style="margin:0;font-size:17px;line-height:1.6;color:#2A3048">See what your comments are worth. We read your last 5 videos and tell you, with real numbers, which questions and buying signals went unanswered and whether your links are measured.</p>
+        </div>
+        <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:18px;padding:20px;box-shadow:0 12px 28px rgba(14,19,48,.12);display:grid;gap:12px">
+          <label for="channel" style="font-size:14px;font-weight:600;color:#4A5068">Your @handle or channel URL</label>
+          <input id="channel" placeholder="@yourchannel" style="width:100%;min-height:52px;padding:14px 16px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;font:400 17px 'Open Sans',sans-serif" style-focus="outline:none;border-color:var(--p,#5B3DF5);box-shadow:0 0 0 3px var(--ring,rgba(91,61,245,.22))">
+          <div style="height:65px;border:1px dashed #D5D8E3;border-radius:8px;display:flex;align-items:center;justify-content:center;font:400 12px 'Geist Mono',monospace;color:#666C84">Cloudflare Turnstile</div>
+          <button style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:14px 24px;border:0;border-radius:10px;background:var(--p,#5B3DF5);color:#FFFFFF;font:700 17px/1 'Open Sans',sans-serif;cursor:pointer;animation:{{ pulseAnim }};transition:transform .15s ease,background .15s ease;white-space:nowrap" style-hover="background:var(--ph,#4527D6);transform:translateY(-1px)">Audit my channel →</button>
+        </section>
+        <p style="margin:0;font-size:14px;line-height:1.6;color:#666C84">Free, no sign-in. Only public data is read, comment text is never stored, and nothing is posted to your channel. vidrev does not need access to your account for this.</p>
+      </main>
+    </sc-if>
+
+    <!-- /audit/[id] -->
+    <sc-if value="{{ isAuditResult }}" hint-placeholder-val="{{ false }}">
+      <main data-screen-label="/audit/[id]" style="max-width:600px;margin:0 auto;padding:24px 16px 64px;display:grid;gap:20px">
+        <div style="display:grid;gap:10px">
+          <p style="display:flex;align-items:center;gap:8px;margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A5068"><span style="width:6px;height:6px;border-radius:9999px;background:var(--a,#00C2A8);white-space:nowrap;flex:none"></span>Audit ready</p>
+          <h1 style="margin:0;font-size:32px;line-height:1.2;letter-spacing:-.018em;font-weight:800">Audit of Zoltan Gero</h1>
+          <p style="margin:0;font-size:15px;color:#666C84">Based on your last 5 videos and 1,284 public comments. Pattern matching on real data, nothing estimated.</p>
+        </div>
+        <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:12px;padding:20px;display:grid;gap:14px">
+          <h2 style="margin:0;font-size:18px;font-weight:700">What we found</h2>
+          <ol style="margin:0;padding:0;list-style:none;display:grid;gap:12px">
+            <sc-for list="{{ findings }}" as="f" hint-placeholder-count="3"><li style="display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:start;font-size:15px;line-height:1.55"><span style="width:28px;height:28px;border-radius:9999px;background:var(--as,#EEEBFF);color:var(--ast,#3A1FC2);display:flex;align-items:center;justify-content:center;font:600 13px 'Geist Mono',monospace;white-space:nowrap;flex:none">{{ f.n }}</span><span>{{ f.t }}</span></li></sc-for>
+          </ol>
+          <p style="margin:0;padding-top:12px;border-top:1px dashed #D5D8E3;font-size:14px;color:#4A5068">4 more findings are in the full report, together with your Comment Conversion Score.</p>
+        </section>
+        <section style="background:#FFFFFF;border:1px solid var(--p,#5B3DF5);border-radius:18px;padding:20px;box-shadow:0 12px 28px rgba(14,19,48,.12);display:grid;gap:12px">
+          <h2 style="margin:0;font-size:20px;font-weight:700">Get the full report by email</h2>
+          <p style="margin:0;font-size:14px;line-height:1.55;color:#4A5068">The score with its breakdown, every finding, links to the comments that need a reply, keyword candidates and the link check.</p>
+          <label for="email" style="font-size:14px;font-weight:600;color:#4A5068">Email</label>
+          <input id="email" type="email" style="width:100%;min-height:48px;padding:12px 16px;border:1px solid #D5D8E3;border-radius:10px;font:400 16px 'Open Sans',sans-serif" style-focus="outline:none;border-color:var(--p,#5B3DF5);box-shadow:0 0 0 3px var(--ring,rgba(91,61,245,.22))">
+          <label style="display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.5;color:#2A3048"><input type="checkbox" style="margin-top:2px;width:18px;height:18px;accent-color:var(--p,#5B3DF5);flex:none">Send me occasional tips on turning comments into revenue. Unsubscribe any time.</label>
+          <button style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 24px;border:0;border-radius:10px;background:var(--p,#5B3DF5);color:#FFFFFF;font:700 16px/1 'Open Sans',sans-serif;cursor:pointer;animation:{{ pulseAnim }};transition:transform .15s ease,background .15s ease;white-space:nowrap" style-hover="background:var(--ph,#4527D6);transform:translateY(-1px)">Email me the full report →</button>
+          <p style="margin:0;font-size:13px;color:#666C84">The report is sent because you ask for it. Ticking the box is optional and only adds tips.</p>
+        </section>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:15px;font-weight:600"><a>See how it works</a><a onClick="{{ goAudit }}" style="cursor:pointer">Audit another channel</a></div>
+      </main>
+    </sc-if>
+
+    <!-- /connect/crm -->
+    <sc-if value="{{ isConnect }}" hint-placeholder-val="{{ false }}">
+      <main data-screen-label="/connect/crm" style="max-width:520px;margin:0 auto;padding:24px 16px 64px;display:grid;gap:20px">
+        <section style="background:#FFFFFF;border:1px solid #E6E8F0;border-radius:18px;padding:24px;box-shadow:0 12px 28px rgba(14,19,48,.12);display:grid;gap:16px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <img src="public/vidrev-logo.png" width="40" height="40" alt="" style="border-radius:10px">
+            <span style="display:flex;gap:4px"><span style="width:6px;height:6px;border-radius:9999px;background:#D5D8E3;white-space:nowrap;flex:none"></span><span style="width:6px;height:6px;border-radius:9999px;background:#97A3B8;white-space:nowrap;flex:none"></span><span style="width:6px;height:6px;border-radius:9999px;background:var(--a,#00C2A8);animation:live-dot 1.6s ease-in-out infinite;white-space:nowrap;flex:none"></span></span>
+            <span style="width:40px;height:40px;border-radius:10px;background:#F0F1F6;border:1px solid #E6E8F0;display:flex;align-items:center;justify-content:center;font:700 13px 'Open Sans',sans-serif;color:#4A5068">HL</span>
+          </div>
+          <h1 style="margin:0;font-size:26px;line-height:1.25;letter-spacing:-.014em;font-weight:700">Connect your HighLevel sub-account</h1>
+          <p style="margin:0;font-size:16px;line-height:1.6;color:#2A3048">HighLevel is ready to connect to vidrev. It will be attached to the account <strong>zoltan@vidrev.app</strong>.</p>
+          <button style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 24px;border:0;border-radius:10px;background:var(--p,#5B3DF5);color:#FFFFFF;font:700 16px/1 'Open Sans',sans-serif;cursor:pointer;animation:{{ pulseAnim }};transition:transform .15s ease,background .15s ease;white-space:nowrap" style-hover="background:var(--ph,#4527D6);transform:translateY(-1px)">Connect to this account →</button>
+        </section>
+      </main>
+    </sc-if>
+  
+    <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
+      <main data-screen-label="/login" style="max-width:440px;margin:0 auto;padding:32px 16px 64px;display:grid;gap:20px">
+        <section style="position:relative;overflow:hidden;background:#FFFFFF;border:1px solid #E6E8F0;border-radius:18px;padding:28px 24px;box-shadow:0 12px 28px rgba(14,19,48,.12);display:grid;gap:16px;background-image:radial-gradient(360px 180px at 100% 0%,var(--glow,rgba(91,61,245,.16)),transparent 70%)">
+          <span style="display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:18px;letter-spacing:-.01em"><img src="public/vidrev-logo.png" width="32" height="32" alt="" style="border-radius:6px">vidrev</span>
+          <h1 style="margin:0;font-size:30px;line-height:1.2;letter-spacing:-.02em;font-weight:800">Sign in to vidrev</h1>
+          <sc-if value="{{ loginSent }}" hint-placeholder-val="{{ false }}"><p role="status" style="margin:0;border-radius:12px;border:1px solid rgba(11,122,62,.3);background:#E3F3E8;padding:12px 14px;font-size:15px;color:#0E1330;animation:card-in-a .4s ease both">If an account exists for that email, a sign-in link is on its way. It works once and expires in 15 minutes.</p></sc-if>
+          <label for="login-email" style="font-size:14px;font-weight:600;color:#4A5068">Email</label>
+          <input id="login-email" type="email" autocomplete="email" style="width:100%;min-height:48px;padding:12px 16px;border:1px solid #D5D8E3;border-radius:10px;background:#FFFFFF;color:#0E1330;font:400 16px 'Open Sans',sans-serif" style-focus="outline:none;border-color:var(--p,#5B3DF5);box-shadow:0 0 0 3px var(--ring,rgba(91,61,245,.22))">
+          <button onClick="{{ loginSubmit }}" style="position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 24px;border:0;border-radius:10px;background:var(--p,#5B3DF5);color:#FFFFFF;font:700 16px/1 'Open Sans',sans-serif;cursor:pointer;animation:{{ pulseAnim }};transition:transform .15s ease,background .15s ease;white-space:nowrap" style-hover="background:var(--ph,#4527D6);transform:translateY(-1px)" style-active="transform:scale(.97)"><span style="position:absolute;inset:0;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);animation:sheen 3.2s ease-in-out infinite;pointer-events:none"></span>{{ loginLabel }}</button>
+          <p style="margin:0;font-size:14px;color:#666C84">No password needed. Your account is created when you subscribe.</p>
+        </section>
+      </main>
+    </sc-if>
+
+    <sc-if value="{{ showBottomNav }}" hint-placeholder-val="{{ false }}">
+      <nav style="position:sticky;bottom:0;z-index:5;display:grid;grid-template-columns:repeat(5,1fr);background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-top:1px solid #E6E8F0;padding:6px 4px calc(6px + env(safe-area-inset-bottom))">
+        <sc-for list="{{ bottomNav }}" as="b" hint-placeholder-count="5">
+          <a onClick="{{ b.go }}" style="position:relative;display:grid;justify-items:center;gap:4px;min-height:48px;padding:6px 2px;text-decoration:none;cursor:pointer;color:{{ b.color }};font-size:12px;font-weight:{{ b.weight }}">
+            <span style="width:22px;height:3px;border-radius:9999px;background:{{ b.bar }};transition:background .2s"></span>
+            <span style="display:inline-flex;align-items:center;gap:4px;white-space:nowrap">{{ b.label }}<sc-if value="{{ b.count }}" hint-placeholder-val="{{ false }}"><span style="min-width:16px;height:16px;padding:0 4px;border-radius:9999px;background:var(--p,#5B3DF5);color:#FFFFFF;font:700 10px/16px 'Open Sans',sans-serif;text-align:center;animation:{{ b.countAnim }}">{{ b.count }}</span></sc-if></span>
+          </a>
+        </sc-for>
+      </nav>
+    </sc-if>
+
+    <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+      <div role="status" style="position:fixed;left:50%;bottom:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:9999px;background:#FFFFFF;border:1px solid #E6E8F0;box-shadow:0 12px 28px rgba(14,19,48,.16);font-size:15px;font-weight:600;color:#0E1330;white-space:nowrap;animation:toast-in .35s cubic-bezier(.2,.7,.2,1) both">
+        <span style="width:22px;height:22px;border-radius:9999px;background:var(--p,#5B3DF5);color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:13px">✓</span>{{ toast }}
+      </div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;palette&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;shine&quot;,&quot;electric&quot;,&quot;signal&quot;,&quot;green&quot;],&quot;default&quot;:&quot;shine&quot;,&quot;tsType&quot;:&quot;'shine'|'electric'|'signal'|'green'&quot;},&quot;viewport&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;desktop&quot;,&quot;mobile&quot;],&quot;default&quot;:&quot;desktop&quot;,&quot;tsType&quot;:&quot;'desktop'|'mobile'&quot;},&quot;dataState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;firstDay&quot;],&quot;default&quot;:&quot;full&quot;,&quot;tsType&quot;:&quot;'full'|'firstDay'&quot;,&quot;section&quot;:&quot;States&quot;},&quot;dashState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;active&quot;,&quot;new&quot;],&quot;default&quot;:&quot;active&quot;,&quot;tsType&quot;:&quot;'active'|'new'&quot;,&quot;section&quot;:&quot;States&quot;},&quot;pulse&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { screen: 'dash', period: 'this_month', q: 0, today: 6, month: 38, bodies: {}, toast: null, copied: null, tick: 0, loginState: 'idle' };
+  static QUEUE = [
+    { video: 'I tested 7 lead magnets on YouTube', kw: 'GUIDE', intent: 'WARM', comment: 'Great breakdown! Can I get the guide? I’ve been trying to fix my opt-in rate for months.', reply: 'Here you go, grab the guide here: {link}', link: 'go.zoltangero.com/k3x9Tq2' },
+    { video: 'How I get buyers from comments', kw: 'COACH', intent: 'HOT', comment: 'How much is the coaching? I want in.', reply: 'Book your spot here: {link}', link: 'go.zoltangero.com/c4Mn8Rt' },
+    { video: 'My GoHighLevel setup in 12 minutes', kw: 'GUIDE', intent: 'WARM', comment: 'Is there a written version of this? Would love the guide.', reply: 'Here you go, grab the guide here: {link}', link: 'go.zoltangero.com/g7Hk2Pz' },
+  ];
+  static ACTIVITY = [
+    { kind: 'Buyer', text: '$197 · I tested 7 lead magnets on YouTube', t: 'buyer' },
+    { kind: 'Subscriber', text: 'GUIDE · How I get buyers from comments', t: 'sub' },
+    { kind: 'Comment', text: 'GUIDE · "Can I get the guide?"', t: 'c' },
+    { kind: 'Reply posted', text: 'PDF · go.zoltangero.com/p8Lm2Wd', t: 'c' },
+    { kind: 'Subscriber', text: 'COACH · My GoHighLevel setup in 12 minutes', t: 'sub' },
+    { kind: 'Buyer', text: '$47 · How I get buyers from comments', t: 'buyer' },
+  ];
+  static CountUp = class extends React.Component {
+    state = { v: 0, done: false };
+    componentDidMount() {
+      const t0 = performance.now(), d = this.props.ms || 1400, to = this.props.to;
+      const step = (t) => { const k = Math.min(1, (t - t0) / d), e = 1 - Math.pow(1 - k, 3); if (k < 1) { this.setState({ v: to * e }); this.raf = requestAnimationFrame(step); } else this.setState({ v: to, done: true }); };
+      this.raf = requestAnimationFrame(step);
+    }
+    componentWillUnmount() { cancelAnimationFrame(this.raf); }
+    render() {
+      const { prefix = '', suffix = '' } = this.props;
+      const txt = prefix + Math.round(this.state.v).toLocaleString('en-US') + suffix;
+      return React.createElement('span', { style: { display: 'inline-block', fontVariantNumeric: 'tabular-nums', transformOrigin: 'left center', animation: this.state.done ? 'num-pop 750ms cubic-bezier(.2,.7,.2,1) 1' : 'none' } }, txt);
+    }
+  };
+  cu(key, to, prefix = '', ms) { return React.createElement(Component.CountUp, { key, to, prefix, ms }); }
+  flash(msg) { clearTimeout(this.tt); this.setState({ toast: msg }); this.tt = setTimeout(() => this.setState({ toast: null }), 2600); }
+  componentWillUnmount() { clearInterval(this.iv); clearTimeout(this.tt); clearTimeout(this.ct); clearTimeout(this.lt); }
+  go = (id) => () => this.setState({ screen: id });
+  static PALETTES = {
+    shine: { name: 'Shine', p: '#D91E50', ph: '#B3163F', a: '#00B1B0', as: '#FFE9EF', ast: '#A3143A', l: '#00807F', lh: '#006564', bs: '#E3F7F6', ring: 'rgba(217,30,80,.2)', halo: 'rgba(228,34,86,.5)', halo2: 'rgba(255,131,112,.35)', glow: 'rgba(255,131,112,.22)', glow2: 'rgba(254,200,77,.22)' },
+    electric: { name: 'Electric', p: '#5B3DF5', ph: '#4527D6', a: '#00C2A8', as: '#EEEBFF', ast: '#3A1FC2', l: '#4527D6', lh: '#2E1A99', bs: '#EEEBFF', ring: 'rgba(91,61,245,.22)', halo: 'rgba(91,61,245,.5)', halo2: 'rgba(91,61,245,.28)', glow: 'rgba(91,61,245,.16)', glow2: 'rgba(0,194,168,.12)' },
+    signal: { name: 'Signal', p: '#E0301E', ph: '#B8240F', a: '#FFB020', as: '#FFEDE8', ast: '#9A1F0C', l: '#1F4FE0', lh: '#163AA8', bs: '#FFEDE8', ring: 'rgba(224,48,30,.2)', halo: 'rgba(224,48,30,.45)', halo2: 'rgba(224,48,30,.25)', glow: 'rgba(224,48,30,.12)', glow2: 'rgba(255,176,32,.14)' },
+    green: { name: 'Green (current)', p: '#0E8542', ph: '#0C6A36', a: '#12A150', as: '#E4F5EA', ast: '#0C5430', l: '#1663C6', lh: '#144F9F', bs: '#EBF3FE', ring: 'rgba(14,133,66,.2)', halo: 'rgba(18,161,80,.45)', halo2: 'rgba(18,161,80,.25)', glow: 'rgba(18,161,80,.12)', glow2: 'rgba(22,99,198,.1)' },
+  };
+  pal() { return Component.PALETTES[this.props.palette ?? 'shine'] ?? Component.PALETTES.electric; }
+  applyPalette() {
+    const p = this.pal(), st = document.documentElement.style;
+    for (const k of ['p','ph','a','as','ast','l','lh','bs','ring','halo','halo2','glow','glow2']) st.setProperty('--' + k, p[k]);
+  }
+  componentDidMount() { this.applyPalette(); this.iv = setInterval(() => this.setState(st => ({ tick: st.tick + 1 })), 5000); }
+  componentDidUpdate() { this.applyPalette(); }
+  renderVals() {
+    const s = this.state.screen;
+    const p = this.props;
+    const mobile = (p.viewport ?? 'desktop') === 'mobile';
+    const dashActive = (p.dashState ?? 'active') === 'active';
+    const SCREENS = [['ds','Design system'],['login','/login'],['dash','/app'],['queue','/app/queue'],['campaigns','/app/campaigns'],['reports','/app/reports'],['domain','/app/domain'],['integrations','/app/integrations'],['cancel','/app/cancel'],['audit','/audit'],['auditResult','/audit/[id]'],['connect','/connect/crm'],['admin','/admin']];
+    const NAV = [['dash','Dashboard'],['queue','Approval queue'],['campaigns','Keywords'],['reports','Reports'],['domain','Link domain'],['integrations','Integrations'],['admin','Owner admin']];
+    const navOwner = { cancel: 'dash' }[s] ?? s;
+    const PERIODS = [['this_month','This month'],['last_month','Last month'],['last_30','Last 30 days'],['this_year','This year'],['all_time','All time']];
+    const ok = { bg: '#E3F3E8', fg: '#0B7A3E' }, warn = { bg: '#FBF2DD', fg: '#6B4E00' }, bad = { bg: '#FFF1E8', fg: '#A33A00' }, idle = { bg: '#F0F1F6', fg: '#4A5068' };
+    const row = (label, c) => ({ label, cells: c });
+    const Q = Component.QUEUE, firstDay = (p.dataState ?? 'full') === 'firstDay';
+    const qi = firstDay ? Q.length : this.state.q, card = Q[qi] || null, qLeft = Math.max(0, Q.length - qi);
+    const A = Component.ACTIVITY, tk = this.state.tick, AT = ['just now', '4 min', '18 min', '26 min'];
+    const tone = { buyer: { bg: 'var(--p,#5B3DF5)', fg: '#FFFFFF' }, sub: { bg: 'var(--as,#EEEBFF)', fg: 'var(--ast,#3A1FC2)' }, c: { bg: '#F0F1F6', fg: '#2A3048' } };
+    return {
+      pulseAnim: (p.pulse ?? true) ? 'cta-halo 2.4s cubic-bezier(0,0,0.2,1) infinite' : 'none',
+      frameW: mobile ? '390px' : '100%',
+      frameBorder: mobile ? '1px solid #D5D8E3' : '0',
+      screens: SCREENS.map(([id, label]) => ({ label, go: this.go(id), bg: id === s ? 'var(--p,#5B3DF5)' : '#FFFFFF', color: id === s ? '#FFFFFF' : '#2A3048', border: id === s ? 'var(--p,#5B3DF5)' : '#D5D8E3' })),
+      nav: NAV.map(([id, label]) => ({ label, count: id === 'queue' && qLeft > 0 ? String(qLeft) : null, countAnim: `bump-${this.state.q % 2 ? 'a' : 'b'} .5s ease`, go: this.go(id), line: id === navOwner ? 'var(--p,#5B3DF5)' : 'transparent', color: id === navOwner ? '#0E1330' : '#4A5068', weight: id === navOwner ? 700 : 500 })),
+      isDS: s === 'ds',
+      isApp: ['dash','queue','campaigns','reports','domain','integrations','cancel','admin'].includes(s),
+      isPublic: ['audit','auditResult','connect','login'].includes(s),
+      isLogin: s === 'login',
+      showTopNav: !mobile, showBottomNav: mobile && ['dash','queue','campaigns','reports','domain','integrations','cancel','admin'].includes(s),
+      bottomNav: [['dash','Home'],['queue','Queue'],['campaigns','Keywords'],['reports','Reports'],['integrations','Connect']].map(([id, label]) => ({ label, go: this.go(id), color: id === navOwner ? '#0E1330' : '#666C84', weight: id === navOwner ? 700 : 500, bar: id === navOwner ? 'var(--p,#5B3DF5)' : 'transparent', count: id === 'queue' && qLeft > 0 ? String(qLeft) : null, countAnim: `bump-${this.state.q % 2 ? 'a' : 'b'} .5s ease` })),
+      money: this.cu('m', 4280, '$', 1600), lifetime: this.cu('l', 18940, '$', 1800), cClicks: this.cu('cc', 1906), cSubs: this.cu('cs', 712), cBuyers: this.cu('cb', 164),
+      firstDay: firstDay, notFirstDay: !firstDay,
+      qHas: !!card, qEmpty: !card, qCard: card ? { ...card, anim: `card-in-${this.state.q % 2 ? 'a' : 'b'} .45s cubic-bezier(.2,.7,.2,1) both` } : {},
+      qPos: card ? `${this.state.q + 1} / ${Q.length}` : '', qWaitLabel: qLeft ? `${qLeft} waiting` : 'All caught up',
+      qBody: card ? (this.state.bodies[this.state.q] ?? card.reply) : '', qOnBody: (e) => { const v = e.target.value; this.setState(st => ({ bodies: { ...st.bodies, [st.q]: v } })); },
+      qApprove: () => { this.setState(st => ({ q: st.q + 1, today: st.today + 1, month: st.month + 1 })); this.flash('Approved. Sending your reply.'); },
+      qSkip: () => { this.setState(st => ({ q: st.q + 1 })); this.flash('Skipped.'); },
+      qManual: () => this.flash('Reply copied. Opening the comment on YouTube.'),
+      qReset: () => this.setState({ q: 0, today: 6, month: 38, bodies: {} }),
+      qToday: String(this.state.today), qMonth: String(this.state.month), qTodayW: (this.state.today / 50 * 100) + '%', qMonthW: (this.state.month / 500 * 100) + '%',
+      qBump: this.state.q ? `bump-${this.state.q % 2 ? 'a' : 'b'} .5s ease` : 'none',
+      toast: this.state.toast,
+      loginSent: this.state.loginState === 'sent',
+      loginLabel: this.state.loginState === 'sending' ? 'Sending…' : 'Email me a sign-in link',
+      loginSubmit: () => { this.setState({ loginState: 'sending' }); clearTimeout(this.lt); this.lt = setTimeout(() => this.setState({ loginState: 'sent' }), 900); },
+      isDash: s === 'dash', isQueue: s === 'queue', isCampaigns: s === 'campaigns', isReports: s === 'reports', isDomain: s === 'domain', isIntegrations: s === 'integrations', isCancel: s === 'cancel', isAdmin: s === 'admin', isAudit: s === 'audit', isAuditResult: s === 'auditResult', isConnect: s === 'connect',
+      dashActive, dashNew: !dashActive,
+      goQueue: this.go('queue'), goReports: this.go('reports'), goCancel: this.go('cancel'), goAdmin: this.go('admin'), goAudit: this.go('audit'),
+      swatches: (() => { const P = this.pal(); return [
+        { name: 'Primary (CTA)', hex: P.p, use: 'solid fill, white text' },
+        { name: 'Primary hover / money', hex: P.ph, use: 'hover, revenue figures' },
+        { name: 'Live accent', hex: P.a, use: 'dots, progress, gradients. Never text' },
+        { name: 'Accent surface', hex: P.as, use: 'chips, conversion tags' },
+        { name: 'Link', hex: P.l, use: 'links, secondary fill' },
+        { name: 'Ink', hex: '#0E1330', use: 'body text' },
+        { name: 'Muted', hex: '#666C84', use: 'secondary text' },
+        { name: 'Ground', hex: '#F7F8FB', use: 'page, with dot grid' },
+      ]; })(),
+      rules: [
+        { n: '01', t: 'One pulsing primary', d: 'Each screen has one primary action. It pulses only where acting matters.' },
+        { n: '02', t: 'Solid fills, white text', d: 'Filled buttons are solid primary or ink with white text, 4.5:1 or better.' },
+        { n: '03', t: 'Eyebrow + title', d: 'Small uppercase label with a live-accent dot above every page title.' },
+        { n: '04', t: 'Micro-trust under CTAs', d: 'A short muted line under the main button says what happens next.' },
+        { n: '05', t: 'Mono for machine text', d: 'Keywords, links, DNS records and ids in Geist Mono.' },
+        { n: '06', t: 'Comment → Subscriber → Buyer → Revenue', d: 'The only funnel words in the UI. No "lead", no "client".' },
+      ],
+      activity: [0,1,2,3].map(i => { const ev = A[((tk * 5 - i) % A.length + A.length) % A.length]; return { ...ev, ...tone[ev.t], at: AT[i], anim: i === 0 && tk ? `row-in-${tk % 2 ? 'a' : 'b'} .6s cubic-bezier(.2,.7,.2,1) both` : 'none' }; }),
+      recent: [
+        { kw: 'GUIDE', status: 'sent', ...ok },
+        { kw: 'PDF', status: 'sent manually', ...ok },
+        { kw: 'GUIDE', status: 'skipped', ...idle },
+        { kw: 'COACH', status: 'failed (the comment was deleted)', ...bad },
+      ],
+      campaigns: [
+        { name: 'Free guide', status: 'on', stBg: ok.bg, stFg: ok.fg, kw: 'GUIDE', aliases: 'also: guides, pdf', intent: 'WARM', videos: 'All videos', dest: 'https://zoltangero.com/guide', link: 'go.zoltangero.com/g7Hk2Pz', tpl: 'Here you go, grab the guide here: {link}', toggle: 'Pause', id: 'g' },
+        { name: 'Coaching call', status: 'paused', stBg: idle.bg, stFg: idle.fg, kw: 'COACH', aliases: '', intent: 'HOT', videos: '2 video(s)', dest: 'https://zoltangero.com/call', link: 'go.zoltangero.com/c4Mn8Rt', tpl: 'Book your spot here: {link}', toggle: 'Resume', id: 'c' },
+      ].map(c => ({ ...c, copyLabel: this.state.copied === c.id ? 'Copied ✓' : 'Copy', copy: () => { navigator.clipboard?.writeText(c.link).catch(() => {}); clearTimeout(this.ct); this.setState({ copied: c.id }); this.ct = setTimeout(() => this.setState({ copied: null }), 1600); } })),
+      periods: PERIODS.map(([id, label]) => ({ label, go: () => this.setState({ period: id }), bg: id === this.state.period ? '#FFFFFF' : 'transparent', shadow: id === this.state.period ? '0 1px 2px rgba(14,19,48,.08)' : 'none', color: id === this.state.period ? '#0E1330' : '#4A5068' })),
+      funnel: [
+        ['Comments',1284,null],['Commenters',961,null],['Replies',412,null],['Clicks',188,'45.6%'],['Subscribers',74,'39.4%'],['Buyers',19,'25.7%'],['Revenue',4280,null],
+      ].map(([label, n, conv], i) => ({ label, value: this.cu('f' + i + this.state.period, n, label === 'Revenue' ? '$' : '', 1100 + i * 90), conv, labelColor: label === 'Revenue' ? 'var(--ph,#4527D6)' : '#4A5068', valueColor: label === 'Revenue' ? 'var(--ph,#4527D6)' : '#0E1330' })),
+      cols: ['Comments','Commenters','Replies','Clicks','Subscribers','Buyers','Revenue','Click rate'],
+      tables: [
+        { title: 'By video', first: 'Video', note: '', rows: [
+          row('I tested 7 lead magnets on YouTube', ['512','388','164','81','33','9','$2,140','49%']),
+          row('How I get buyers from comments', ['421','310','142','62','25','6','$1,380','44%']),
+          row('My GoHighLevel setup in 12 minutes', ['351','263','106','45','16','4','$760','42%']),
+        ] },
+        { title: 'By keyword', first: 'Keyword', note: '', rows: [
+          row('GUIDE (WARM)', ['904','690','301','142','58','13','$2,910','47%']),
+          row('COACH (HOT)', ['380','271','111','46','16','6','$1,370','41%']),
+        ] },
+        { title: 'Reply templates', first: 'Reply', note: 'Which reply wording brings clicks and buyers. Static links are the ones in descriptions and pinned comments.', rows: [
+          row('Here you go, grab the guide here: {link} [en] (WARM)', ['–','–','248','121','49','11','$2,420','49%']),
+          row('AI draft (HOT)', ['–','–','96','38','13','5','$1,210','40%']),
+          row('Static link', ['–','–','–','29','12','3','$650','–']),
+        ] },
+      ],
+      events: ['Comment matched (a keyword comment got a draft)','Reply posted','Link clicked','Subscriber (opt-in)','Buyer (purchase)'],
+      endpointActions: ['Send test event','Turn off','New secret','Remove'],
+      hooks: [
+        { k: 'Subscriber', v: 'https://app.vidrev.app/api/hooks/optin' },
+        { k: 'Buyer', v: 'https://app.vidrev.app/api/hooks/purchase' },
+        { k: 'Token', v: 'hk_2c9f1e7a44b04d8e9a1c' },
+      ],
+      deliveries: [
+        { at: '2026-09-26 08:41 UTC', event: 'purchase', status: 'delivered', ...ok },
+        { at: '2026-09-26 08:12 UTC', event: 'opt_in', status: 'delivered', ...ok },
+        { at: '2026-09-26 07:55 UTC', event: 'link_clicked', status: 'retrying (timeout, attempt 2)', ...warn },
+      ],
+      cancelItems: [
+        { t: 'Every link you already posted keeps working and keeps sending viewers to your page. We never hold your links hostage.', dot: 'var(--a,#00C2A8)' },
+        { t: 'Measurement stops: new clicks, subscribers and buyers are no longer counted or attributed.', dot: '#F2651B' },
+        { t: 'No new comments are read and no replies are drafted or posted.', dot: '#F2651B' },
+        { t: 'You can still sign in and see the reports recorded so far.', dot: 'var(--a,#00C2A8)' },
+      ],
+      adminStats: [{ k: 'Accounts', v: '37' }, { k: 'Founding seats', v: '29 / 100' }, { k: 'Audits, 7 days', v: '64' }, { k: 'Full reports', v: '23' }],
+      adminCols: ['Email','Status','Plan','Channels','Created','Actions'],
+      accounts: [
+        { email: 'zoltan@vidrev.app', status: 'active', plan: 'founding', ch: '1', created: '2026-06-02', action: 'Suspend', ...ok },
+        { email: 'anna@creatorlab.io', status: 'active (trial to 2026-10-04)', plan: 'founding', ch: '1', created: '2026-09-20', action: 'Suspend', ...ok },
+        { email: 'mark@ghlpartners.com', status: 'suspended', plan: 'ghl_affiliate_free', ch: '0', created: '2026-07-14', action: 'Reactivate', ...bad },
+      ],
+      findings: [
+        { n: '1', t: '37 comments asked a question and got no reply in 48 hours.' },
+        { n: '2', t: '12 comments showed a buying signal ("price", "where can I get") and went unanswered.' },
+        { n: '3', t: '3 of your 5 video descriptions link to a page without tracking, so clicks are not measured.' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

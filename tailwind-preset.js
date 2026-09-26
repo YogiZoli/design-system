@@ -13,20 +13,21 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // Shine (2026-09-26): brand = live blue-green, accent = fuchsia primary
         brand: {
-          50: "#EBF3FE", 100: "#D6E6FD", 200: "#B0CEFB", 300: "#82B0F7",
-          400: "#4F8DF0", 500: "#1E7CE8", 600: "#1663C6", 700: "#144F9F",
-          800: "#163F7B", 900: "#15355F", 950: "#0E2038",
+          50: "#E3F7F6", 100: "#C4EEEC", 200: "#92DEDC", 300: "#55CAC8",
+          400: "#1FBDBC", 500: "#00B1B0", 600: "#00807F", 700: "#006564",
+          800: "#0B4D4C", 900: "#2A3048", 950: "#0E1330",
         },
         accent: {
-          50: "#E4F5EA", 100: "#BFE8CC", 200: "#8DD5A6", 300: "#56BE7B",
-          400: "#24A957", 500: "#12A150", 600: "#0E8542", 700: "#0C6A36",
-          800: "#0C5430", 900: "#0A4228",
+          50: "#FFE9EF", 100: "#FFD0DD", 200: "#F9A3B8", 300: "#F2708F",
+          400: "#EB4A74", 500: "#E42256", 600: "#D91E50", 700: "#B3163F",
+          800: "#A3143A", 900: "#7F0F2D",
         },
         neutral: {
-          0: "#FFFFFF", 50: "#F6F8FC", 100: "#EDF1F7", 200: "#E0E6F0",
-          300: "#CAD3E1", 400: "#97A3B8", 500: "#6A7688", 600: "#4C5768",
-          700: "#333D4C", 800: "#1E2733", 900: "#131A24",
+          0: "#FFFFFF", 50: "#F7F8FB", 100: "#F0F1F6", 200: "#E6E8F0",
+          300: "#D5D8E3", 400: "#9A9FB3", 500: "#666C84", 600: "#4A5068",
+          700: "#2A3048", 800: "#0E1330", 900: "#080B1E",
         },
         // shadcn-style role tokens, backed by CSS variables from tokens.css
         background: "var(--background)",
@@ -38,7 +39,8 @@ module.exports = {
         border: "var(--border)",
         input: "var(--input)",
         ring: "var(--ring)",
-        success: "#0B7A3E", warning: "#E5A400", danger: "#E5484D",
+        success: "#0B7A3E", warning: "#E5A400", danger: "#F2651B",
+        live: "var(--live)", link: "var(--link)",
       },
       fontFamily: {
         sans: ['"Open Sans"', '"Segoe UI"', "system-ui", "sans-serif"],

@@ -1,0 +1,93 @@
+/* VidRev design tokens: "Shine" palette (2026-09-26).
+   Replaces the green/azure canon. Light theme only. Components read the role
+   tokens, never the scales. Source of truth: design-system/tokens.css. */
+:root {
+  /* Primary: fuchsia, the action colour (CTA fill, money figures) */
+  --primary-50:  #FFE9EF;
+  --primary-100: #FFD0DD;
+  --primary-300: #F2708F;
+  --primary-500: #E42256;   /* brand fuchsia, accents only (4.5:1 borderline) */
+  --primary-600: #D91E50;   /* CTA fill, white text ~5:1 */
+  --primary-700: #B3163F;   /* CTA hover, money text */
+  --primary-800: #A3143A;   /* text on primary-50 */
+
+  /* Live accent: blue-green, motion only (dots, progress, hairlines). Never text. */
+  --live-50:  #E3F7F6;
+  --live-500: #00B1B0;
+  --live-700: #00807F;      /* link colour, 4.6:1 on white */
+  --live-800: #006564;      /* link hover */
+
+  /* Glow colours: background light only, never text or fills */
+  --coral: #FF8370;
+  --freesia: #FEC84D;
+
+  /* Neutrals: cool, crisp */
+  --ink:        #0E1330;   /* body text */
+  --ink-2:      #2A3048;
+  --label:      #4A5068;
+  --muted-text: #666C84;
+  --border-strong-c: #D5D8E3;
+  --border-c:   #E6E8F0;
+  --surface-alt-c: #F0F1F6;
+  --ground:     #F7F8FB;
+  --white:      #FFFFFF;
+
+  /* Semantic: danger is warm orange-red so it never reads as the fuchsia CTA */
+  --success: #0B7A3E; --success-surface: #E3F3E8;
+  --warning-text: #6B4E00; --warning-dot: #E5A400; --warning-surface: #FBF2DD;
+  --danger-text: #A33A00; --danger-dot: #F2651B; --danger-surface: #FFF1E8; --danger-border: rgba(242,101,27,.4);
+
+  /* Role tokens */
+  --background: var(--ground);
+  --foreground: var(--ink);
+  --surface: var(--white);
+  --surface-foreground: var(--ink);
+  --surface-alt: var(--surface-alt-c);
+  --muted: var(--surface-alt-c);
+  --muted-foreground: var(--muted-text);
+  --primary: var(--primary-600);
+  --primary-hover: var(--primary-700);
+  --primary-foreground: #FFFFFF;
+  --primary-surface: var(--primary-50);
+  --primary-surface-foreground: var(--primary-800);
+  --secondary: var(--ink);            /* second filled action: ink, white text */
+  --secondary-hover: #1E2446;
+  --secondary-foreground: #FFFFFF;
+  --link: var(--live-700);
+  --link-hover: var(--live-800);
+  --live: var(--live-500);
+  --border: var(--border-c);
+  --border-strong: var(--border-strong-c);
+  --input: var(--border-strong-c);
+  --ring: rgba(217,30,80,.2);
+
+  /* Type */
+  --font-sans: "Open Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, Menlo, monospace;
+
+  /* Radius */
+  --radius-sm: 6px; --radius-md: 10px; --radius-lg: 12px; --radius-xl: 18px; --radius-full: 9999px;
+
+  /* Shadow (ink-tinted) */
+  --shadow-xs: 0 1px 2px rgba(14,19,48,.06);
+  --shadow-md: 0 4px 12px rgba(14,19,48,.08);
+  --shadow-lg: 0 12px 28px rgba(14,19,48,.12);
+
+  /* Decorative */
+  --dot-grid: radial-gradient(rgba(14,19,48,.07) 1px, transparent 1px);   /* size 20px */
+  --hero-glow: radial-gradient(520px 260px at 100% 0%, rgba(255,131,112,.22), transparent 70%),
+               radial-gradient(360px 200px at 0% 100%, rgba(254,200,77,.22), transparent 70%);
+  --hairline: linear-gradient(90deg, var(--primary-600), var(--live-500));
+}
+
+/* Motion */
+@keyframes cta-halo { 0% { box-shadow: 0 0 0 0 rgba(228,34,86,.5), 0 6px 20px rgba(255,131,112,.35); } 70% { box-shadow: 0 0 0 14px transparent, 0 6px 20px rgba(255,131,112,.35); } 100% { box-shadow: 0 0 0 0 transparent, 0 6px 20px rgba(255,131,112,.35); } }
+@keyframes num-pop { 0% { transform: scale(1); } 30% { transform: scale(1.09); text-shadow: 0 0 22px rgba(255,131,112,.35); } 60% { transform: scale(.98); } 100% { transform: scale(1); text-shadow: none; } }
+@keyframes sheen { 0%, 70% { transform: translateX(-120%); } 100% { transform: translateX(220%); } }
+@keyframes ping { 75%, 100% { transform: scale(2.2); opacity: 0; } }
+@keyframes bar-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes card-in { from { opacity: 0; transform: translateY(14px) scale(.985); } to { opacity: 1; transform: none; } }
+@keyframes row-in { from { opacity: 0; transform: translateY(-8px); background: var(--primary-50); } to { opacity: 1; transform: none; background: transparent; } }
+@keyframes toast-in { from { opacity: 0; transform: translate(-50%,16px); } to { opacity: 1; transform: translate(-50%,0); } }
+@keyframes shimmer { from { background-position: -400px 0; } to { background-position: 400px 0; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition-duration: .01ms !important; } }
