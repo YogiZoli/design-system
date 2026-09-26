@@ -151,7 +151,7 @@
   /* --- Typography --- */
   --font-sans: "Open Sans", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
   --font-display: "Open Sans", "Segoe UI", system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace; /* eyebrows, keywords, ids, code */
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace; /* eyebrows, keywords, links, ids, DNS, code */
 
   /* Base 18px (1.125rem on a 16px root). Scale ~1.22. */
   --text-xs:   0.8125rem;  --lh-xs:   1.125rem; --ls-xs:   0;      /* 13 */
@@ -353,7 +353,7 @@
   background: var(--accent-surface); color: var(--accent-surface-foreground);
 }
 
-a.link { color: var(--link); text-decoration: none; }
+a.link { color: var(--link); font-family: var(--font-mono); text-decoration: none; }  /* Shine: links in Geist Mono */
 a.link:hover { color: var(--link-hover); text-decoration: underline; text-underline-offset: 2px; }
 
 hr.rule { border: 0; border-top: var(--border-width) solid var(--border); margin: var(--space-8) 0; }

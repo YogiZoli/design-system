@@ -7,11 +7,11 @@ Canon: `git@github.com:YogiZoli/design-system.git` (`tokens.css` + `BRAND-GUIDE.
 
 | v1 | v2 |
 |---|---|
-| `#00C4FF` cyan, `#163300`, `#9FE870` | azure `#1E7CE8` rules, H1 azure `#144F9F`, green `#0E8542` CTA block, body `#1E2733` on white |
+| `#00C4FF` cyan, `#163300`, `#9FE870` | blue-green `#00B1B0` rules, H1 ink `#0E1330`, fuchsia `#D91E50` CTA block, body `#0E1330` on white |
 | Liberation Sans | Open Sans, embedded from `fonts/` as base64 (real font embed in the PDF) |
 | everything crammed onto one A4 page | cover page, then content flows across as many pages as it needs |
 | WeasyPrint | headless Chrome (`--print-to-pdf`); WeasyPrint needs a GTK stack this machine does not have |
-| `10pt` body | `11pt` (about 18px), BRAND-GUIDE 3.2 type scale, 12px cards, navy-tinted shadows |
+| `10pt` body | `11pt` (about 18px), BRAND-GUIDE 3.2 type scale, 12px cards, ink-tinted shadows |
 
 ## The 3 styles
 
@@ -43,7 +43,7 @@ next to the PDF for debugging.
 ## Files
 
 ```
-brand.py     shared: v2 tokens, embedded Open Sans, print CSS, Chrome renderer
+brand.py     shared: Shine v3 tokens, embedded Open Sans, print CSS, Chrome renderer
 playbook.py  Playbook generator + default content
 checklist.py Checklist generator + default content
 miniguide.py Mini-Guide generator + default content

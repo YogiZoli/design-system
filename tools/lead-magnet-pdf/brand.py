@@ -4,9 +4,9 @@ Zoltan Gero lead magnet PDF, shared brand layer (design system v2)
 Canon: git@github.com:YogiZoli/design-system.git  (tokens.css + BRAND-GUIDE.md)
 
 This module owns everything that is the same across the three lead magnet
-styles: the v2 colour tokens, the embedded Open Sans font faces, the shared
-print CSS (type scale from BRAND-GUIDE 3.2, 18px body, 12px cards, navy
-shadows, azure rules, green CTA block) and the HTML to PDF renderer.
+styles: the Shine (v3) colour tokens, the embedded Open Sans font faces, the shared
+print CSS (type scale from BRAND-GUIDE 3.2, 18px body, 12px cards, ink
+shadows, blue-green rules, fuchsia CTA block) and the HTML to PDF renderer.
 
 Rendering uses headless Chrome (canon: we do not write our own render engine).
 WeasyPrint needs a GTK stack that is not present on this machine; Chrome is.
@@ -30,28 +30,28 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 FONT_DIR = ROOT / "fonts"
 
-# ── v2 colour tokens (from design-system/tokens.css, do not invent) ─────────
+# ── Shine v3 colour tokens (from design-system/tokens.css, do not invent) ─────────
 
 T = {
-    "background":   "#F6F8FC",
+    "background":   "#F7F8FB",
     "surface":      "#FFFFFF",
-    "foreground":   "#1E2733",   # body text
-    "muted":        "#6A7688",
-    "border":       "#E0E6F0",
-    "primary":      "#0E8542",   # green, CTA fill only
+    "foreground":   "#0E1330",   # body text
+    "muted":        "#666C84",
+    "border":       "#E6E8F0",
+    "primary":      "#D91E50",   # fuchsia, CTA fill only
     "primary_fg":   "#FFFFFF",
-    "secondary":    "#1663C6",   # azure button
-    "brand":        "#1E7CE8",   # azure, rules + marks
-    "h1":           "#144F9F",   # azure 700, PDF headline per touchpoint table
-    "link":         "#1663C6",
-    "dark":         "#0E2038",   # dark section / footer
-    "dark_fg":      "#82B0F7",
-    "azure_50":     "#EBF3FE",
-    "azure_100":    "#D6E6FD",
-    "green_50":     "#E4F5EA",
-    "green_100":    "#BFE8CC",
-    "neutral_50":   "#F6F8FC",
-    "neutral_100":  "#EDF1F7",
+    "secondary":    "#00807F",   # link blue-green
+    "brand":        "#00B1B0",   # live blue-green, rules + marks
+    "h1":           "#0E1330",   # ink, PDF headline per touchpoint table
+    "link":         "#00807F",
+    "dark":         "#0E1330",   # dark section / footer
+    "dark_fg":      "#55CAC8",
+    "primary_50":     "#FFE9EF",
+    "primary_100":    "#FFD0DD",
+    "live_50":     "#E3F7F6",
+    "live_100":    "#C4EEEC",
+    "neutral_50":   "#F7F8FB",
+    "neutral_100":  "#F0F1F6",
 }
 
 # ── Open Sans, embedded as base64 so the HTML is portable and the PDF
@@ -176,7 +176,7 @@ strong,b{{font-weight:700;}}
   border-radius:12px;
   padding:6mm 7mm;
   margin:4mm 0;
-  box-shadow:0 4px 12px rgba(14,32,56,.08);
+  box-shadow:0 4px 12px rgba(14,19,48,.08);
   break-inside:avoid;
 }}
 
@@ -184,10 +184,10 @@ strong,b{{font-weight:700;}}
 .pillar{{
   flex:1;background:{T['surface']};border:1px solid {T['border']};
   border-radius:12px;padding:6mm 5mm;text-align:center;
-  box-shadow:0 4px 12px rgba(14,32,56,.08);break-inside:avoid;
+  box-shadow:0 4px 12px rgba(14,19,48,.08);break-inside:avoid;
 }}
 .pillar .dot{{
-  width:12mm;height:12mm;border-radius:50%;background:{T['azure_50']};
+  width:12mm;height:12mm;border-radius:50%;background:{T['primary_50']};
   border:1.5px solid {T['brand']};
   margin:0 auto 3mm auto;display:flex;align-items:center;justify-content:center;
 }}
@@ -226,7 +226,7 @@ strong,b{{font-weight:700;}}
 /* left rule "the point" style callout */
 .note{{
   border-left:3px solid {T['brand']};
-  background:{T['azure_50']};
+  background:{T['primary_50']};
   padding:3.5mm 5mm;border-radius:0 8px 8px 0;
   margin:4mm 0;font-size:10.5pt;line-height:1.5;break-inside:avoid;
 }}
@@ -235,10 +235,10 @@ strong,b{{font-weight:700;}}
   text-transform:uppercase;color:{T['h1']};margin-bottom:1mm;
 }}
 
-/* green tip / action callout */
+/* blue-green tip / action callout */
 .tip{{
   border-left:3px solid {T['primary']};
-  background:{T['green_50']};
+  background:{T['live_50']};
   padding:3.5mm 5mm;border-radius:0 8px 8px 0;
   margin:3mm 0;font-size:10.5pt;line-height:1.5;break-inside:avoid;
 }}
@@ -251,7 +251,7 @@ strong,b{{font-weight:700;}}
 .numcard{{
   display:flex;gap:5mm;align-items:flex-start;
   background:{T['surface']};border:1px solid {T['border']};border-radius:12px;
-  padding:6mm 6mm;margin:4mm 0;box-shadow:0 4px 12px rgba(14,32,56,.08);
+  padding:6mm 6mm;margin:4mm 0;box-shadow:0 4px 12px rgba(14,19,48,.08);
   break-inside:avoid;
 }}
 .numcard .num{{
@@ -260,10 +260,10 @@ strong,b{{font-weight:700;}}
 }}
 .numcard .nbody{{flex:1;}}
 
-/* overview box (light, azure tint  no dark backgrounds anywhere) */
+/* overview box (light, fuchsia tint, no dark backgrounds anywhere) */
 .darkbox{{
-  background:{T['azure_50']};color:{T['foreground']};border-radius:12px;
-  border:1px solid {T['azure_100']};
+  background:{T['primary_50']};color:{T['foreground']};border-radius:12px;
+  border:1px solid {T['primary_100']};
   padding:6mm 7mm;margin:4mm 0;break-inside:avoid;
 }}
 .darkbox .dlabel{{
@@ -289,7 +289,7 @@ strong,b{{font-weight:700;}}
 }}
 .panel h3{{margin-top:0;color:{T['h1']};}}
 
-/* ---------- CTA block (light panel, green BUTTON  per Zoltan) ---------- */
+/* ---------- CTA block (light panel, fuchsia BUTTON per Shine) ---------- */
 .cta{{
   background:{T['neutral_50']};border:1px solid {T['border']};
   border-radius:16px;padding:8mm 9mm;margin:9mm 0 4mm 0;
@@ -303,7 +303,7 @@ strong,b{{font-weight:700;}}
   display:inline-block;background:{T['primary']};color:{T['primary_fg']};
   font-size:12pt;font-weight:700;letter-spacing:0.01em;
   padding:4mm 12mm;border-radius:10px;
-  box-shadow:0 4px 12px rgba(14,32,56,.10);
+  box-shadow:0 4px 12px rgba(14,19,48,.10);
 }}
 .cta .cta-url{{
   display:block;margin-top:3mm;font-size:8.5pt;color:{T['muted']};

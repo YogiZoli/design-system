@@ -55,7 +55,7 @@ Fuchsia is the action, blue-green is the live signal, ink is the text, and about
 |---|---|---|---|
 | Action | Fuchsia | `#D91E50` | The primary CTA only. Solid fill, white text (about 5:1), pulsing halo, sheen, 1px hover lift. Hover `#B3163F`. Also money figures (`#B3163F` as text). |
 | Live | Blue-green | `#00B1B0` | Status dots, progress bars, the 2px header hairline (fuchsia to blue-green). **Never text.** |
-| Link | Deep blue-green | `#00807F` | Links (4.6:1 on white). Hover `#006564`. |
+| Link | Deep blue-green | `#00807F` | Links (4.6:1 on white), set in Geist Mono. Hover `#006564`. |
 | Secondary | Ink | `#0E1330` | Second filled button, white text. Also body text. |
 | Glow | Coral / Freesia | `#FF8370` / `#FEC84D` | Faint background glow behind hero cards only. Never text, never fills. |
 
@@ -156,7 +156,7 @@ calm, very legible at small sizes on a phone. Full Hungarian coverage: á é í 
 ```
 Fallback: "Open Sans", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif
 Load:     https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap
-Mono:     Geist Mono for eyebrows, keywords, links in UI, ids, DNS, code, counters
+Mono:     Geist Mono for eyebrows, keywords, links, ids, DNS, code, counters
 ```
 
 For a PDF that cannot use a web font, embed the Open Sans .ttf files. Only if
@@ -344,7 +344,7 @@ Never "lead" or "client".
 ```
 Primary CTA          fuchsia  #D91E50  fill, white text, halo pulse + sheen (hover #B3163F)
 Secondary button     ink      #0E1330  fill, white text
-Links                #00807F           hover #006564
+Links                #00807F  Geist Mono, hover #006564
 Live accent          #00B1B0  dots, progress, hairline. Never text.
 Glow (bg only)       coral #FF8370   freesia #FEC84D
 Page background      #F7F8FB + 20px dot grid     Surface or card  #FFFFFF
@@ -363,6 +363,7 @@ Video title (H1)     Open Sans 700   40px
 Section head (H2)    Open Sans 700   32px
 Body                 Open Sans 400   18px (app UI 16px)
 Eyebrow              Geist Mono 700  12px   uppercase +0.08em
+Links, keywords, ids Geist Mono      #00807F links
 CTA button label     Open Sans 600   16 to 18px, white on solid
 ```
 

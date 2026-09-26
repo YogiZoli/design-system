@@ -9,13 +9,13 @@
 
 ## Layouts in the master
 
-1. Title (navy)
-2. Section divider (navy) with a large number
-3. Content, light background (`#F6F8FC`, H1 `#144F9F`, body `#1E2733`)
-4. Content, dark background (navy, white heading, one word optionally `#82B0F7`)
-5. CTA (navy) with "Comment [KEYWORD] below", KEYWORD in a green `#0E8542` pill
+1. Title (ink)
+2. Section divider (ink) with a large number
+3. Content, light background (`#F7F8FB`, H1 `#0E1330`, body `#0E1330`)
+4. Content, dark background (ink, white heading, one word optionally `#55CAC8`)
+5. CTA (ink) with "Comment [KEYWORD] below", KEYWORD in a fuchsia `#D91E50` pill
 
-Motif: one thin outline circle bleeds off a corner, alternating green and azure.
+Motif: one thin outline circle bleeds off a corner, alternating fuchsia and blue-green.
 Every colour comes from `../../tokens.css` / `../../BRAND-GUIDE.md`. Do not add
 values here.
 

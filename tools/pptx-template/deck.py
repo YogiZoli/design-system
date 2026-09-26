@@ -32,21 +32,21 @@ SAMPLES.mkdir(exist_ok=True)
 FONT = "Open Sans"
 
 # --- canon colours (BRAND-GUIDE.md section 2) ---
-NAVY        = RGBColor(0x0E, 0x20, 0x38)
-NAVY_2      = RGBColor(0x15, 0x35, 0x5F)
-PAGE        = RGBColor(0xF6, 0xF8, 0xFC)
+INK        = RGBColor(0x0E, 0x13, 0x30)
+INK_2      = RGBColor(0x2A, 0x30, 0x48)
+PAGE        = RGBColor(0xF7, 0xF8, 0xFB)
 WHITE       = RGBColor(0xFF, 0xFF, 0xFF)
-BODY        = RGBColor(0x1E, 0x27, 0x33)
-MUTED       = RGBColor(0x6A, 0x76, 0x88)
-MUTED_LIGHT = RGBColor(0x9D, 0xB0, 0xC7)
-BODY_ON_DARK= RGBColor(0xC6, 0xD3, 0xE4)
-H1_BLUE     = RGBColor(0x14, 0x4F, 0x9F)
-AZURE       = RGBColor(0x1E, 0x7C, 0xE8)
-AZURE_LIGHT = RGBColor(0x82, 0xB0, 0xF7)
-GREEN_CTA   = RGBColor(0x0E, 0x85, 0x42)
-GREEN_POP   = RGBColor(0x24, 0xA9, 0x57)
-BORDER      = RGBColor(0xE0, 0xE6, 0xF0)
-CARD_DARK   = RGBColor(0x17, 0x32, 0x4F)
+BODY        = RGBColor(0x0E, 0x13, 0x30)
+MUTED       = RGBColor(0x66, 0x6C, 0x84)
+MUTED_LIGHT = RGBColor(0x9A, 0x9F, 0xB3)
+BODY_ON_DARK= RGBColor(0xD5, 0xD8, 0xE3)
+H1_INK     = RGBColor(0x0E, 0x13, 0x30)
+LIVE       = RGBColor(0x00, 0xB1, 0xB0)
+LIVE_LIGHT = RGBColor(0x55, 0xCA, 0xC8)
+FUCHSIA_CTA   = RGBColor(0xD9, 0x1E, 0x50)
+FUCHSIA_POP   = RGBColor(0xD9, 0x1E, 0x50)
+BORDER      = RGBColor(0xE6, 0xE8, 0xF0)
+CARD_DARK   = RGBColor(0x2A, 0x30, 0x48)
 
 EMU_W, EMU_H = Inches(13.333), Inches(7.5)
 MARGIN = Inches(0.9)
@@ -104,7 +104,7 @@ def _set_tracking(run, pts):
     rPr.set("spc", str(int(pts * 100)))
 
 
-RING_TINT = RGBColor(0xB0, 0xCE, 0xFB)   # brand-200, faint on light
+RING_TINT = RGBColor(0x92, 0xDE, 0xDC)   # brand-200, faint on light
 
 
 def _ring(slide, corner, color=RING_TINT):
@@ -170,9 +170,9 @@ def layout_title(prs, eyebrow, title, subtitle, tag="LAYOUT: TITLE"):
     _bg(s, PAGE)
     _ring(s, "br")
     _text(s, MARGIN, Inches(1.7), Inches(9.6), Inches(0.5), eyebrow.upper(),
-          size=15, color=RGBColor(0x16, 0x63, 0xC6), bold=True, tracking=1.6)
+          size=15, color=RGBColor(0x00, 0x80, 0x7F), bold=True, tracking=1.6)
     _text(s, MARGIN, Inches(2.35), Inches(10.4), Inches(2.6), title,
-          size=44, color=H1_BLUE, bold=True, line=1.05)
+          size=44, color=H1_INK, bold=True, line=1.05)
     _text(s, MARGIN, Inches(4.9), Inches(9.4), Inches(1.4), subtitle,
           size=18, color=MUTED, line=1.4)
     _footer(s)
@@ -183,11 +183,11 @@ def layout_title(prs, eyebrow, title, subtitle, tag="LAYOUT: TITLE"):
 def layout_section(prs, number, title, tag="LAYOUT: SECTION DIVIDER"):
     s = _blank(prs)
     _bg(s, PAGE)
-    _ring(s, "tr", RGBColor(0xBF, 0xE8, 0xCC))   # green-100 tint
+    _ring(s, "tr", RGBColor(0xC4, 0xEE, 0xEC))   # live-100 tint
     _text(s, MARGIN, Inches(1.9), Inches(4), Inches(2.2), str(number),
-          size=120, color=GREEN_CTA, bold=True, line=1.0)
+          size=120, color=FUCHSIA_CTA, bold=True, line=1.0)
     _text(s, MARGIN, Inches(4.2), Inches(10.6), Inches(1.8), title,
-          size=40, color=H1_BLUE, bold=True, line=1.1)
+          size=40, color=H1_INK, bold=True, line=1.1)
     _footer(s)
     _tag(s, tag, False)
     return s
@@ -197,9 +197,9 @@ def layout_content_light(prs, title, body, *, bullets=None, right=None,
                          tag="LAYOUT: CONTENT LIGHT"):
     s = _blank(prs)
     _bg(s, PAGE)
-    _ring(s, "br", RGBColor(0xD6, 0xE6, 0xFD))
+    _ring(s, "br", RGBColor(0xFF, 0xD0, 0xDD))
     _text(s, MARGIN, Inches(0.9), Inches(11.5), Inches(1.1), title,
-          size=32, color=H1_BLUE, bold=True, line=1.1)
+          size=32, color=H1_INK, bold=True, line=1.1)
     col_w = Inches(5.6) if right else Inches(11.3)
     y = Inches(2.35)
     if body:
@@ -207,7 +207,7 @@ def layout_content_light(prs, title, body, *, bullets=None, right=None,
                    size=19, color=BODY, line=1.45)
         y += Inches(1.8)
     if bullets:
-        _bullets(s, MARGIN, y, col_w, bullets, BODY, GREEN_CTA)
+        _bullets(s, MARGIN, y, col_w, bullets, BODY, FUCHSIA_CTA)
     if right:
         right(s, MARGIN + col_w + Inches(0.5), Inches(2.2))
     _footer(s)
@@ -217,25 +217,25 @@ def layout_content_light(prs, title, body, *, bullets=None, right=None,
 
 def layout_content_callout(prs, title, body, *, emphasis=None, callout=None,
                            tag="LAYOUT: CONTENT + CALLOUT"):
-    """Light content slide with an azure-tint callout band. (No dark slides.)"""
+    """Light content slide with an fuchsia-tint callout band. (No dark slides.)"""
     s = _blank(prs)
     _bg(s, PAGE)
-    _ring(s, "bl", RGBColor(0xBF, 0xE8, 0xCC))
+    _ring(s, "bl", RGBColor(0xC4, 0xEE, 0xEC))
     if emphasis and emphasis in title:
         before, after = title.split(emphasis, 1)
-        runs = [(before, H1_BLUE, True), (emphasis, GREEN_CTA, True), (after, H1_BLUE, True)]
+        runs = [(before, H1_INK, True), (emphasis, FUCHSIA_CTA, True), (after, H1_INK, True)]
         _text(s, MARGIN, Inches(0.9), Inches(11.5), Inches(1.2), runs,
-              size=32, color=H1_BLUE, bold=True, line=1.1)
+              size=32, color=H1_INK, bold=True, line=1.1)
     else:
         _text(s, MARGIN, Inches(0.9), Inches(11.5), Inches(1.2), title,
-              size=32, color=H1_BLUE, bold=True, line=1.1)
+              size=32, color=H1_INK, bold=True, line=1.1)
     _text(s, MARGIN, Inches(2.4), Inches(10.4), Inches(2.4), body,
           size=19, color=BODY, line=1.45)
     if callout:
         band = _card(s, MARGIN, Inches(4.9), Inches(11.0), Inches(1.5),
-                     RGBColor(0xEB, 0xF3, 0xFE), RGBColor(0xD6, 0xE6, 0xFD))
+                     RGBColor(0xFF, 0xE9, 0xEF), RGBColor(0xFF, 0xD0, 0xDD))
         _text(s, MARGIN + Inches(0.45), Inches(5.02), Inches(10.1), Inches(1.25),
-              callout, size=17, color=RGBColor(0x14, 0x4F, 0x9F), bold=True,
+              callout, size=17, color=RGBColor(0x0E, 0x13, 0x30), bold=True,
               line=1.35, anchor=MSO_ANCHOR.MIDDLE)
     _footer(s)
     _tag(s, tag, False)
@@ -249,7 +249,7 @@ layout_content_dark = layout_content_callout
 def layout_cta(prs, keyword, line, tag="LAYOUT: CTA"):
     s = _blank(prs)
     _bg(s, PAGE)
-    _ring(s, "tr", RGBColor(0xBF, 0xE8, 0xCC))
+    _ring(s, "tr", RGBColor(0xC4, 0xEE, 0xEC))
     base_y = Inches(2.8)
     _text(s, Inches(1.0), base_y, Inches(4.7), Inches(1.0), "Comment",
           size=44, color=BODY, bold=True, align=PP_ALIGN.RIGHT,
@@ -270,7 +270,7 @@ def slide_pill(slide, x, y, keyword):
     sh = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, w, Inches(0.88))
     sh.adjustments[0] = 0.5
     sh.fill.solid()
-    sh.fill.fore_color.rgb = GREEN_CTA
+    sh.fill.fore_color.rgb = FUCHSIA_CTA
     sh.line.fill.background()
     sh.shadow.inherit = False
     tf = sh.text_frame
@@ -334,22 +334,22 @@ def build_master():
 
     def demo_right(s, x, y):
         _card(s, x, y, Inches(5.3), Inches(3.4), WHITE, BORDER)
-        _icon_circle(s, x + Inches(0.4), y + Inches(0.4), "1", GREEN_CTA, WHITE)
+        _icon_circle(s, x + Inches(0.4), y + Inches(0.4), "1", FUCHSIA_CTA, WHITE)
         _text(s, x + Inches(0.4), y + Inches(1.5), Inches(4.5), Inches(1.6),
-              "A highlight card. White fill, thin border, an icon in a green circle.",
+              "A highlight card. White fill, thin border, an icon in a fuchsia circle.",
               size=15, color=BODY, line=1.4)
 
     layout_content_light(prs, "Content, light background",
-                         "Body text is 18 to 19 point, left aligned, colour 1E2733. "
-                         "Headings are 32 point bold in 144F9F.",
+                         "Body text is 18 to 19 point, left aligned, colour 0E1330. "
+                         "Headings are 32 point bold in 0E1330.",
                          bullets=["First supporting point", "Second supporting point",
                                   "Third supporting point"],
                          right=demo_right)
     layout_content_dark(prs, "Content with a callout band and one emphasis word",
-                        "Every slide is light. Body is 1E2733, headings 144F9F. One "
-                        "word in the heading can be green 0E8542.",
+                        "Every slide is light. Body is 0E1330, headings 0E1330. One "
+                        "word in the heading can be fuchsia D91E50.",
                         emphasis="emphasis",
-                        callout="The callout band sits on an azure tint (EBF3FE).")
+                        callout="The callout band sits on a fuchsia tint (FFE9EF).")
     layout_cta(prs, "KEYWORD",
                "The CTA slide. Replace KEYWORD with your real trigger word.")
     out = HERE / "master.pptx"
@@ -371,14 +371,14 @@ def build_sample():
 
     def for_you(s, x, y):
         _card(s, x, y, Inches(5.3), Inches(4.6), WHITE, BORDER)
-        _icon_circle(s, x + Inches(0.4), y + Inches(0.4), "✓", GREEN_CTA, WHITE)
+        _icon_circle(s, x + Inches(0.4), y + Inches(0.4), "✓", FUCHSIA_CTA, WHITE)
         _text(s, x + Inches(1.45), y + Inches(0.52), Inches(3.6), Inches(0.7),
-              "YES, THIS IS FOR YOU", size=13, color=GREEN_CTA, bold=True, tracking=0.6)
+              "YES, THIS IS FOR YOU", size=13, color=FUCHSIA_CTA, bold=True, tracking=0.6)
         _bullets(s, x + Inches(0.4), y + Inches(1.55), Inches(4.55),
                  ["You run your business on GoHighLevel",
                   "You publish on YouTube, or you are about to",
                   "You want every lead traced to the exact video and comment"],
-                 BODY, GREEN_CTA)
+                 BODY, FUCHSIA_CTA)
 
     s2 = layout_content_light(prs, "Is this for you?",
                               "This works when two things are already true. If they are "
