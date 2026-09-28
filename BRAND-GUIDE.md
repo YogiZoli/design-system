@@ -339,6 +339,8 @@ Never "lead" or "client".
 
 ## SECTION 6. AI AGENT QUICK REFERENCE
 
+**Rule 9. The brand name is always lowercase: vidrev. Wordmark: "vid" in ink, "rev" in primary.** Also at the start of a sentence, in page titles, meta tags, emails, alt text and docs, and never inside an uppercase-transformed element.
+
 ### 6.1 Colour cheat sheet
 
 ```

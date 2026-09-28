@@ -11,6 +11,7 @@ Supersedes the green/azure guide. Reference design: `VidRev App v3.dc.html` (ope
 6. Danger is warm orange-red (`#A33A00` text, `#F2651B` dot, `#FFF1E8` surface) so errors never read as the CTA.
 7. Open Sans for everything; Geist Mono for eyebrows, keywords, links, ids, DNS, code.
 8. Vocabulary: Comment → Subscriber → Buyer → Revenue. Never "lead" or "client".
+9. The brand name is always lowercase: vidrev. Wordmark: "vid" in ink, "rev" in primary.
 
 ## Type scale
 Display money 56/800/-0.035em · Page title 28–30/700–800 · Card title 18/700 · Body 16 · Meta 15 · Small 13 · Eyebrow 12/700 uppercase +0.08em with a 6px dot.
